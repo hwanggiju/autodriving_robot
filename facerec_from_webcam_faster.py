@@ -10,7 +10,7 @@ obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
 biden_image = face_recognition.load_image_file("biden.jpg")
 biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
 
-giju_image = face_recognition.load_image_file("giju_image.jpg")
+giju_image = face_recognition.load_image_file("giju_small_image.jpg")
 giju_face_encoding = face_recognition.face_encodings(giju_image)[0]
 
 known_face_encodings = [
@@ -43,13 +43,15 @@ while True:
         face_names = []
         for face_encoding in face_encodings:
             matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+            
             name = "Unknown"
-
+            
             face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
             best_match_index = np.argmin(face_distances)
             if matches[best_match_index]:
                 name = known_face_names[best_match_index]
-
+            print("{}".format(name))
+            
             face_names.append(name)
 
     process_this_frame = not process_this_frame
@@ -59,7 +61,6 @@ while True:
         right *= 4
         bottom *= 4
         left *= 4
-
         cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
 
         cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
@@ -68,9 +69,8 @@ while True:
 
     cv2.imshow('Video', frame)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == 27:
         break
 
-# Release handle to the webcam
 video_capture.release()
 cv2.destroyAllWindows()
