@@ -1,9 +1,8 @@
 import face_recognition
-import picamera
+import cv2
 import numpy as np
 
-camera = picamera.PiCamera()
-camera.resolution = (320, 240)
+cap = cv2.VideoCapture(0)
 output = np.empty((240, 320, 3), dtype=np.uint8)
 
 print("Loading known face image(s)")
@@ -18,9 +17,8 @@ face_encodings = []
 
 while True:
     print("Capturing image.")
-
-    camera.capture(output, format="rgb")
-
+    ret, img = cv2.read()
+    cv2.capture(output, format="rgb")
     face_locations = face_recognition.face_locations(output)
     print("Found {} faces in image.".format(len(face_locations)))
     face_encodings = face_recognition.face_encodings(output, face_locations)
@@ -28,7 +26,7 @@ while True:
     for face_encoding in face_encodings:
         match = face_recognition.compare_faces([obama_face_encoding, giju_face_encoding], face_encoding)
         name = "<Unknown Person>"
-        
+
         if match[0]:
             name = "Barack Obama"
 
