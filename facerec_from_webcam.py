@@ -3,10 +3,10 @@ import cv2
 import numpy as np
 cap = cv2.VideoCapture(0)
 
-obama_image = face_recognition.load_image_file("obama_small.jpg")
+obama_image = face_recognition.load_image_file("obama.jpg")
 obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
 
-giju_image = face_recognition.load_image_file("giju_small_image.jpg")
+giju_image = face_recognition.load_image_file("giju_image.jpg")
 giju_face_encoding = face_recognition.face_encodings(giju_image)[0]
 
 known_face_encodings = [
