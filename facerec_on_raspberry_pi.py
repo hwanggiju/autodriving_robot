@@ -3,7 +3,6 @@ import cv2
 import numpy as np
 
 cap = cv2.VideoCapture(0)
-output = np.empty((240, 320, 3), dtype=np.uint8)
 
 print("Loading known face image(s)")
 obama_image = face_recognition.load_image_file("obama_small.jpg")
