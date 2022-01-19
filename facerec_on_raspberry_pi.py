@@ -18,7 +18,7 @@ face_encodings = []
 while True:
     print("Capturing image.")
     ret, img = cap.read()
-    cv2.capture(output, format="rgb")
+    cap.capture(output, format="rgb")
     face_locations = face_recognition.face_locations(output)
     print("Found {} faces in image.".format(len(face_locations)))
     face_encodings = face_recognition.face_encodings(output, face_locations)
