@@ -10,7 +10,7 @@ while True :
         data = ser.readline()
         
         print('distance : ')
-        print(data)
+        print(data[2:8])
         
     except KeyboardInterrupt:
         break
