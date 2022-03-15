@@ -155,9 +155,6 @@ class Motor_tab(QWidget):
         self.UIReset4()
         
     def UIReset4(self) :
-        self.line_edit = QLineEdit()
-        self.line_edit.returnPressed.connect(self.addText)
-        
         self.btn_add = QPushButton('Start')
         self.btn_add.clicked.connect(self.addText)
         
