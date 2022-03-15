@@ -185,7 +185,8 @@ class Motor_tab(QWidget):
         while True :
             try :
                 data = ser.readline()
-                self.tb.append(data)
+                
+                self.tb.append(data.decode()[:len(data)-1])
                 
             except KeyboardInterrupt:
                 break
