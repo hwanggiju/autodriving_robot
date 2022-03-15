@@ -168,7 +168,6 @@ class Motor_tab(QWidget):
         self.btn_clear.clicked.connect(self.clearText)
         
         vbox = QVBoxLayout()
-        vbox.addWidget(self.line_edit)
         vbox.addWidget(self.tb)
         vbox.addWidget(self.btn_add)
         vbox.addWidget(self.btn_clear)
