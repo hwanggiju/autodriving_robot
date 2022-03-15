@@ -185,8 +185,7 @@ class Motor_tab(QWidget):
         while True :
             data = ser.readline()
             self.tb.append(data.decode()[:len(data)-1])
-            if self.btn_clear.clicked.connect(self.clearText) :
-                port.close()
+            if KeyboardInterrupt:
                 break
 
     def clearText(self) :
