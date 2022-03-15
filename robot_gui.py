@@ -183,17 +183,13 @@ class Motor_tab(QWidget):
         brate = 9600
         ser = serial.Serial(port, brate, timeout=None)
         while True :
-            try :
-                data = ser.readline()
-                
-                self.tb.append(data.decode()[:len(data)-1])
-                
-            except KeyboardInterrupt:
+            data = ser.readline()
+            self.tb.append(data.decode()[:len(data)-1])
+            if self.btn_clear.clicked.connect(self.clearText) :
                 break
-        
-        self.line_edit.clear()
+            
         port.close()
-        
+    
     def clearText(self) :
         self.tb.clear()
         
