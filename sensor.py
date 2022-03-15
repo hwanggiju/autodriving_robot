@@ -6,12 +6,13 @@ brate = 9600
 ser = serial.Serial(port, brate, timeout=None)
 
 while True :
-    Try :
-        data = ser.readline()
+    try :
+        data = port.readline()
+        
         print('distance : ')
         print(data)
         
-    exceptKeyboardInterrupt :
+    except KeyboardInterrupt:
         break
     
-port close()
+port.close()
