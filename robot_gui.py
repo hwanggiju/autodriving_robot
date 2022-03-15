@@ -186,10 +186,9 @@ class Motor_tab(QWidget):
             data = ser.readline()
             self.tb.append(data.decode()[:len(data)-1])
             if self.btn_clear.clicked.connect(self.clearText) :
+                port.close()
                 break
-            
-        port.close()
-    
+
     def clearText(self) :
         self.tb.clear()
         
