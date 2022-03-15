@@ -8,10 +8,8 @@ ser = serial.Serial(port, brate, timeout=None)
 while True :
     try :
         data = ser.readline()
-        data = data.encode('utf-8')
-        
         print('distance : ')
-        print(data)
+        print(data.decode()[:len(data)-1])
         
     except KeyboardInterrupt:
         break
