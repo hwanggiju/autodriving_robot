@@ -1,11 +1,14 @@
+from curses import baudrate
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
 import cv2
-import keyboard
 import numpy as np
 import face_recognition
 import sys
+import serial
+import time
+import serial
 
 class Robot_UI(QDialog):
     def __init__(self):
@@ -16,7 +19,7 @@ class Robot_UI(QDialog):
         tabs = QTabWidget()
         
         tabs.addTab(Camera_tab(), 'Camera')
-        tabs.addTab(Radar_tab(), 'Radar')
+        tabs.addTab(Radar_tab(), 'Map')
         tabs.addTab(Motor_tab(), 'Motor')
         
         vbox = QVBoxLayout()
@@ -151,17 +154,51 @@ class Motor_tab(QWidget):
         super().__init__()
         self.UIReset4()
         
-    def UIReset4(self):
-        self.text = '준비 중...'
+    def UIReset4(self) :
+        self.line_edit = QLineEdit()
+        self.line_edit.returnPressed.connect(self.addText)
         
-    def paintEvent(self, event):
-        paint = QPainter()
-        paint.begin(self)
-        self.drawText(event, paint)
-        paint.end()
+        self.btn_add = QPushButton('Start')
+        self.btn_add.clicked.connect(self.addText)
         
-    def drawText(self, event, paint):
-        paint.drawText(event.rect(), Qt.AlignCenter, self.text)
+        self.tb = QTextBrowser()
+        self.tb.setAcceptRichText(True)
+        self.tb.setOpenExternalLinks(True)
+        self.tb.append('Data View')
+        
+        self.tb.setAlignment(Qt.AlignCenter)
+        self.btn_clear = QPushButton('Clear')
+        self.btn_clear.clicked.connect(self.clearText)
+        
+        vbox = QVBoxLayout()
+        vbox.addWidget(self.line_edit)
+        vbox.addWidget(self.tb)
+        vbox.addWidget(self.btn_add)
+        vbox.addWidget(self.btn_clear)
+        
+        self.setLayout(vbox)
+        
+        self.setWindowTitle('Data View')
+        self.setGeometry(300, 300, 300, 400)
+        self.show()
+            
+    def addText(self) :
+        port = '/dev/ttyACM0'
+        brate = 9600
+        ser = serial.Serial(port, brate, timeout=None)
+        while True :
+            try :
+                data = ser.readline()
+                self.tb.append(data)
+                
+            except KeyboardInterrupt:
+                break
+        
+        self.line_edit.clear()
+        port.close()
+        
+    def clearText(self) :
+        self.tb.clear()
         
 program = QApplication(sys.argv)
 exec_inst = Robot_UI()
