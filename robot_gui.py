@@ -174,13 +174,11 @@ class Motor_tab(QWidget):
         self.port = '/dev/ttyACM0'
         self.brate = 9600
         self.ser = serial.Serial(self.port, self.brate, timeout=None)
-        while True :
-            try :
-                data = self.ser.readline()
-                self.tb.append(data.decode()[:len(data)-1])
-            except self.btn_clear:
-                break
-
+        cnt = 0
+        while cnt < 10 :
+            data = self.ser.readline()
+            self.tb.append(data.decode()[:len(data)-1])
+            cnt += 1
     def clearText(self) :
         self.tb.clear()
         
