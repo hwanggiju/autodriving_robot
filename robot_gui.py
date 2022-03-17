@@ -160,13 +160,15 @@ class Motor_tab(QWidget):
         self.btn_clear = QPushButton('Clear')
         self.btn_clear.clicked.connect(self.clearText)
 
+        self.btn_clear = QPushButton('Start')
+        self.btn_clear.clicked.connect(self.addText)
+        
         vbox = QVBoxLayout()
         vbox.addWidget(self.tb)
         vbox.addWidget(self.btn_clear)
         
         self.setLayout(vbox)
         
-        self.addText()
     def addText(self) :
         self.port = '/dev/ttyACM0'
         self.brate = 9600
