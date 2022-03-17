@@ -160,11 +160,12 @@ class Motor_tab(QWidget):
         self.btn_clear = QPushButton('Clear')
         self.btn_clear.clicked.connect(self.clearText)
 
-        self.btn_clear = QPushButton('Start')
-        self.btn_clear.clicked.connect(self.addText)
+        self.btn_add = QPushButton('Start')
+        self.btn_add.clicked.connect(self.addText)
         
         vbox = QVBoxLayout()
         vbox.addWidget(self.tb)
+        vbox.addWidget(self.btn_add)
         vbox.addWidget(self.btn_clear)
         
         self.setLayout(vbox)
