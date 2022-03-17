@@ -153,11 +153,9 @@ class Motor_tab(QWidget):
     def __init__(self):
         super().__init__()
         self.UIReset4()
+        self.addText()
         
     def UIReset4(self) :
-#        self.btn_add = QPushButton('Start')
-#        self.btn_add.clicked.connect(self.addText)
-        
         self.tb = QTextBrowser()
         
         self.btn_clear = QPushButton('Clear')
@@ -165,7 +163,6 @@ class Motor_tab(QWidget):
 
         vbox = QVBoxLayout()
         vbox.addWidget(self.tb)
-#        vbox.addWidget(self.btn_add)
         vbox.addWidget(self.btn_clear)
         
         self.setLayout(vbox)
@@ -173,23 +170,13 @@ class Motor_tab(QWidget):
         self.setWindowTitle('Data View')
         self.setGeometry(300, 300, 300, 400)
         self.show()
-        
+            
+    def addText(self) :
         self.port = '/dev/ttyACM0'
         self.brate = 9600
         self.ser = serial.Serial(self.port, self.brate, timeout=None)
         while True :
-            try:
-                data = self.ser.readline()
-                self.tb.append(data.decode()[:len(data)-1])
-            except self.btn_clear :
-                break
-            
-    def addText(self) :
-        port = '/dev/ttyACM0'
-        brate = 9600
-        ser = serial.Serial(port, brate, timeout=None)
-        while True :
-            data = ser.readline()
+            data = self.ser.readline()
             self.tb.append(data.decode()[:len(data)-1])
 
     def clearText(self) :
