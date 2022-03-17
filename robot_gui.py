@@ -153,7 +153,6 @@ class Motor_tab(QWidget):
     def __init__(self):
         super().__init__()
         self.UIReset4()
-        self.addText()
         
     def UIReset4(self) :
         self.tb = QTextBrowser()
@@ -167,10 +166,7 @@ class Motor_tab(QWidget):
         
         self.setLayout(vbox)
         
-        self.setWindowTitle('Data View')
-        self.setGeometry(300, 300, 300, 400)
-        self.show()
-            
+        self.addText()
     def addText(self) :
         self.port = '/dev/ttyACM0'
         self.brate = 9600
