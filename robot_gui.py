@@ -167,16 +167,16 @@ class Motor_tab(QWidget):
 
         self.port = '/dev/ttyACM0'
         self.brate = 9600
-        ser = serial.Serial(self.port, self.brate, timeout=None)
+        self.ser = serial.Serial(self.port, self.brate, timeout=None)
         while True :
-            data = ser.readline()
+            data = self.ser.readline()
             self.tb.append(data.decode()[:len(data)-1])
-            if self.btn_clear :
+            if KeyboardInterrupt :
                 break
         vbox = QVBoxLayout()
         vbox.addWidget(self.tb)
 #        vbox.addWidget(self.btn_add)
-#        vbox.addWidget(self.btn_clear)
+        vbox.addWidget(self.btn_clear)
         
         self.setLayout(vbox)
         
