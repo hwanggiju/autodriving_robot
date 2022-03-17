@@ -155,22 +155,28 @@ class Motor_tab(QWidget):
         self.UIReset4()
         
     def UIReset4(self) :
-        self.btn_add = QPushButton('Start')
-        self.btn_add.clicked.connect(self.addText)
+#        self.btn_add = QPushButton('Start')
+#        self.btn_add.clicked.connect(self.addText)
         
         self.tb = QTextBrowser()
         self.tb.setAcceptRichText(True)
         self.tb.setOpenExternalLinks(True)
-        self.tb.append('Data View')
         
-        self.tb.setAlignment(Qt.AlignCenter)
         self.btn_clear = QPushButton('Clear')
         self.btn_clear.clicked.connect(self.clearText)
-        
+
+        self.port = '/dev/ttyACM0'
+        self.brate = 9600
+        ser = serial.Serial(self.port, self.brate, timeout=None)
+        while True :
+            data = ser.readline()
+            self.tb.append(data.decode()[:len(data)-1])
+            if self.btn_clear :
+                break
         vbox = QVBoxLayout()
         vbox.addWidget(self.tb)
-        vbox.addWidget(self.btn_add)
-        vbox.addWidget(self.btn_clear)
+#        vbox.addWidget(self.btn_add)
+#        vbox.addWidget(self.btn_clear)
         
         self.setLayout(vbox)
         
@@ -185,8 +191,6 @@ class Motor_tab(QWidget):
         while True :
             data = ser.readline()
             self.tb.append(data.decode()[:len(data)-1])
-            if KeyboardInterrupt:
-                break
 
     def clearText(self) :
         self.tb.clear()
