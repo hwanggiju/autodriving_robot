@@ -163,12 +163,12 @@ class Motor_tab(QWidget):
         self.btn_add = QPushButton('Start')
         self.btn_add.clicked.connect(self.addText)
         
-        vbox = QVBoxLayout()
-        vbox.addWidget(self.tb)
-        vbox.addWidget(self.btn_add)
-        vbox.addWidget(self.btn_clear)
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(self.tb)
+        self.vbox.addWidget(self.btn_add)
+        self.vbox.addWidget(self.btn_clear)
         
-        self.setLayout(vbox)
+        self.setLayout(self.vbox)
         
     def addText(self) :
         self.port = '/dev/ttyACM0'
@@ -178,6 +178,7 @@ class Motor_tab(QWidget):
         while cnt < 10 :
             data = self.ser.readline()
             self.tb.append(data.decode()[:len(data)-1])
+            self.vbox.addWidget(self.tb)
             cnt += 1
     def clearText(self) :
         self.tb.clear()
