@@ -159,8 +159,6 @@ class Motor_tab(QWidget):
 #        self.btn_add.clicked.connect(self.addText)
         
         self.tb = QTextBrowser()
-        self.tb.setAcceptRichText(True)
-        self.tb.setOpenExternalLinks(True)
         
         self.btn_clear = QPushButton('Clear')
         self.btn_clear.clicked.connect(self.clearText)
