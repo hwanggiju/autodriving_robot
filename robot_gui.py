@@ -171,7 +171,7 @@ class Motor_tab(QWidget):
         self.setLayout(self.vbox)
         
     def addText(self) :
-        self.port = '/dev/ttyACM0'
+        self.port = '/dev/ttyACM1'
         self.brate = 9600
         self.ser = serial.Serial(self.port, self.brate, timeout=None)
         cnt = 0
