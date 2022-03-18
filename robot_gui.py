@@ -178,8 +178,8 @@ class Motor_tab(QWidget):
         while cnt < 10 :
             data = self.ser.readline()
             if data :
-#            self.text_edit.append(data.decode()[:len(data)-1])
-                self.text_edit.setText(data.decode()[:len(data)-1])
+                self.text_edit.append(data.decode()[:len(data)-1])
+#                self.text_edit.setText(data.decode()[:len(data)-1])
                 cnt += 1
     def clearText(self) :
         self.text_edit.clear()
