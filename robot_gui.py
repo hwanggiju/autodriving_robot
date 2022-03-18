@@ -160,7 +160,7 @@ class Motor_tab(QWidget):
         self.btn_clear = QPushButton('Clear')
         self.btn_clear.clicked.connect(self.clearText)
 
-        self.btn_add = QPushButton('Start')
+        self.btn_add = QPushButton('Start', "OFF")
         self.btn_add.clicked.connect(self.addText)
         
         self.vbox = QVBoxLayout()
@@ -178,7 +178,7 @@ class Motor_tab(QWidget):
         while cnt < 10 :
             data = self.ser.readline()
             self.tb.append(data.decode()[:len(data)-1])
-            self.vbox.addWidget(self.tb)
+            print(self.tb)
             cnt += 1
     def clearText(self) :
         self.tb.clear()
