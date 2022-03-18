@@ -155,7 +155,7 @@ class Motor_tab(QWidget):
         self.UIReset4()
         
     def UIReset4(self) :
-        self.tb = QTextBrowser()
+        self.text_edit = QTextEdit()
         
         self.btn_clear = QPushButton('Clear')
         self.btn_clear.clicked.connect(self.clearText)
@@ -164,7 +164,7 @@ class Motor_tab(QWidget):
         self.btn_add.clicked.connect(self.addText)
         
         self.vbox = QVBoxLayout()
-        self.vbox.addWidget(self.tb)
+        self.vbox.addWidget(self.text_edit)
         self.vbox.addWidget(self.btn_add)
         self.vbox.addWidget(self.btn_clear)
         
@@ -177,11 +177,10 @@ class Motor_tab(QWidget):
         cnt = 0
         while cnt < 10 :
             data = self.ser.readline()
-            self.tb.append(data.decode()[:len(data)-1])
-            print(self.tb)
+            self.text_edit.append(data.decode()[:len(data)-1])
             cnt += 1
     def clearText(self) :
-        self.tb.clear()
+        self.text_edit.clear()
         
 program = QApplication(sys.argv)
 exec_inst = Robot_UI()
