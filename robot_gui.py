@@ -163,6 +163,12 @@ class Motor_tab(QWidget):
         self.btn_add = QPushButton('Start')
         self.btn_add.clicked.connect(self.addText)
         
+        cnt_test = 0
+        
+        while cnt_test < 10 :
+            self.text_edit.append('hello')
+            cnt_test += 1
+                    
         self.vbox = QVBoxLayout()
         self.vbox.addWidget(self.text_edit)
         self.vbox.addWidget(self.btn_add)
