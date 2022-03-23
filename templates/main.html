@@ -1,0 +1,28 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+
+    <title>Live Streaming</title>
+</head>
+
+<body>
+    <div class='container'>
+        <div class='row'>
+            <div class = 'col-lg-8  offset-lg-2'>
+                <h2 class="mt-5">Live Streaming</h2>
+                    <form method='post', action="{{url_for('tasks')}}">
+                    <input type="submit" value="Stop/Start" name="stop" />
+                    <input type="submit" value="User" name="clicked" />
+                    </form>
+                <img src="{{ url_for('stream') }}" height="80%">
+                <div class='print'> 사용자 {{value}} 확인했습니다.  </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
