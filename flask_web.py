@@ -1,23 +1,27 @@
 from glob import glob
+from multiprocessing.sharedctypes import Value
 from flask import Flask, Response, render_template, request
 import cv2
 import face_recognition
 import numpy as np
 from threading import Thread
 import time 
+import serial
+from random import *
 
-global user, switch, name
+global user, switch, name # 전역변수 선언
 user = 0
 switch = 1
-name = ' '
+name = 'Unknown'
 
-obama_image = face_recognition.load_image_file("obama.jpg")
+# 이미지 학습 전처리
+obama_image = face_recognition.load_image_file("C:/opencv/development/face/obama.jpg")
 obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
 
-biden_image = face_recognition.load_image_file("biden.jpg")
+biden_image = face_recognition.load_image_file("C:/opencv/development/face/biden.jpg")
 biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
 
-giju_image = face_recognition.load_image_file("giju_small_image.jpg")
+giju_image = face_recognition.load_image_file("C:/opencv/development/face/giju_image.jpg")
 giju_face_encoding = face_recognition.face_encodings(giju_image)[0]
 
 known_face_encodings = [
@@ -28,12 +32,15 @@ known_face_encodings = [
 known_face_names = [
     "Barack Obama",
     "Joe Biden",
-    "giju"
+    "Gi ju"
 ]
-
+# 어플리케이션 선언
 app = Flask(__name__)
 
+# 카메라 ON
 cap = cv2.VideoCapture(0)
+fps = cap.get(cv2.CAP_PROP_FPS)
+print(fps)
 
 def user_detect(frame) :
     global name
@@ -52,7 +59,8 @@ def user_detect(frame) :
         if matches[best_match_index]:
             name = known_face_names[best_match_index]
             return name
-    return name   
+        
+    return name
     
 def gen_frame():
     global user
@@ -71,10 +79,21 @@ def gen_frame():
                 pass
         else :
             pass
-        
+    
 @app.route('/')
 def index():
     return render_template('main.html')
+
+@app.route('/monitoring')
+def sensor_data():
+    # i = randint(1, 100)
+    port = '/dev/ttyACM0'
+    brate = 9600
+    ser = serial.Serial(port, brate, timeout=None)
+    data = ser.readline()
+    data = int(data.decode()[:len(data)-1])
+    
+    return render_template('sensor.html', value=data)
 
 @app.route('/stream')
 def stream():
@@ -101,6 +120,6 @@ def tasks() :
         return render_template('main.html')
     
     return render_template('main.html', value=name)
-    
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True)
