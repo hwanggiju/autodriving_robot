@@ -91,7 +91,7 @@ def sensor_data():
     brate = 9600
     ser = serial.Serial(port, brate, timeout=None)
     data = ser.readline()
-    data = int(data.decode()[:len(data)-1])
+    data = int(data.decode()[:len(data)-3])
     
     return render_template('sensor.html', value=data)
 
