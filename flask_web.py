@@ -1,13 +1,15 @@
 from glob import glob
 from multiprocessing.sharedctypes import Value
-from flask import Flask, Response, render_template, request
+from urllib import response
+from flask import Flask, Response, render_template, request, make_response
 import cv2
 import face_recognition
 import numpy as np
 from threading import Thread
-import time 
+from time import time 
 import serial
-from random import *
+from random import random
+import json
 
 global user, switch, name # 전역변수 선언
 user = 0
@@ -15,13 +17,13 @@ switch = 1
 name = 'Unknown'
 
 # 이미지 학습 전처리
-obama_image = face_recognition.load_image_file("obama.jpg")
+obama_image = face_recognition.load_image_file("C:/opencv/development/face/obama.jpg")
 obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
 
-biden_image = face_recognition.load_image_file("biden.jpg")
+biden_image = face_recognition.load_image_file("C:/opencv/development/face/biden.jpg")
 biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
 
-giju_image = face_recognition.load_image_file("giju_image.jpg")
+giju_image = face_recognition.load_image_file("C:/opencv/development/face/giju_image.jpg")
 giju_face_encoding = face_recognition.face_encodings(giju_image)[0]
 
 known_face_encodings = [
@@ -84,16 +86,23 @@ def gen_frame():
 def index():
     return render_template('main.html')
 
-@app.route('/monitoring')
-def sensor_data():
-    # i = randint(1, 100)
+@app.route('/Sensor')
+def bridge():
+    return render_template('index.html')
+
+@app.route('/live-data')
+def live_data():
+    '''
     port = '/dev/ttyACM0'
     brate = 9600
     ser = serial.Serial(port, brate, timeout=None)
-    data = ser.readline()
-    data = float(data.decode()[:len(data)-3])
-    
-    return render_template('sensor.html', value=data)
+    senser_data = ser.readline()
+    senser_data = float(data.decode()[:len(data)-3])
+    '''
+    data = [time() * 1000, random() * 100]
+    response = make_response(json.dumps(data))
+    response.content_type = 'application/json'
+    return response
 
 @app.route('/stream')
 def stream():
@@ -122,4 +131,4 @@ def tasks() :
     return render_template('main.html', value=name)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', threaded=True)
+    app.run(host='127.0.0.1', threaded=True)

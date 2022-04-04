@@ -1,40 +1,20 @@
-from smtplib import OLDSTYLE_AUTH
-import serial
-from matplotlib import pyplot as plt
-from matplotlib import animation
-import numpy
-import random
-import time
-import numpy as np
+import json
+from time import time
+from random import random
+from flask import Flask, render_template, make_response
 
-port = '/dev/ttyACM0'
-brate = 9600
+app = Flask(__name__)
 
-ser = serial.Serial(port, brate, timeout=None)
+@app.route('/')
+def hello_world():
+    return render_template('index.html')
 
-def ReadData():
-    data = ser.readline()
-    data = int(data.decode()[:len(data)-1])
-    return data
+@app.route('/live-data')
+def live_data():
+    data = [time() * 1000, random() * 100]
+    response = make_response(json.dumps(data))
+    response.content_type = 'application/json'
+    return response
 
-fig = plt.figure()
-ax = plt.axes(xlim=(0, 50), ylim=(4, 13))
-line, _ = ax.plot([], [], lw=1, c='blue', marker='d', ms=2)
-max_points = 50
-line, _ = ax.plot(np.arange(max_points), np.ones(max_points, dtype=np.float) * np.nan, lw = 1, c='blue',
-                  marker='d', ms=2)
-
-def init():
-    return line
-    
-def animate(i) :
-    y = ReadData()
-    old_y = line.get_ydata()
-    new_y = np.r_[old_y[1:, y]]
-    line.set_ydata(new_y)
-    print(new_y)
-    
-    return line,
-
-anim = animation.FuncAnimation(fig, animation, init_func=init, frames=200, interval=20, blit=False)
-plt.show()
+if __name__ == '__main__':
+    app.run(debug=True, host='127.0.0.1', port=5000)
