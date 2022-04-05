@@ -132,4 +132,4 @@ def tasks() :
     return render_template('main.html', value=name)
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', threaded=True)
+    app.run(host='0.0.0.0', threaded=True)
