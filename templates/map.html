@@ -17,4 +17,35 @@
           </div>
         </div>
     </div>
+
+    <div class="jumbotron">
+      <div class="container-fluid">
+        <br/>
+        <p>MAP</p>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/" onclick="location.href='main.html'">Camera</a> &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/Sensor" onclick="location.href='index.html'">Sensor</a><br><br>
+          <form action='/method' method="POST">
+            <label for="fname"> 학번 : </label><br>
+            <input type="text" id="fname" name="src_num"><br>
+            <label for='lname'> 이름 : </label><br>
+            <input type="text" id="lname" name="src_name"><br><br>
+            <div class='print'> 학번 : {{value_num}} 이름 : {{value_name}} </div> <br><br>
+            <input type="submit" value="commit"><br><br>
+            <img src={{ url_for('static', filename='doraemong.jpg') }}>
+          </form>
+      </div>
+    </div>
+
+    <hr>
+      <footer>
+        <p>&copy; 613-1 Lab</p>
+      </footer>
+    </div>
+  </body>
 </html>

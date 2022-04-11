@@ -1,5 +1,6 @@
 from glob import glob
 from multiprocessing.sharedctypes import Value
+from pickle import TRUE
 from urllib import response
 from flask import Flask, Response, render_template, request, make_response
 import cv2
@@ -42,8 +43,6 @@ app = Flask(__name__)
 
 # 카메라 ON
 cap = cv2.VideoCapture(0)
-fps = cap.get(cv2.CAP_PROP_FPS)
-print(fps)
 
 def user_detect(frame) :
     global name
@@ -88,8 +87,12 @@ def index():
     return render_template('main.html')
 
 @app.route('/Sensor')
-def bridge():
+def bridge_sensor():
     return render_template('index.html')
+
+@app.route("/Map")
+def bridge_map():
+    return render_template('map.html')
 
 @app.route('/live-data')
 def live_data():
@@ -131,5 +134,17 @@ def tasks() :
     
     return render_template('main.html', value=name)
 
+@app.route('/method', methods=['GET', 'POST'])
+def method() :
+    if request.method == 'GET' :
+        src_num = request.args["src_num"]
+        src_name = request.args.get["src_name"]
+        return render_template('map.html', value_num=src_num, value_name=src_name)
+    
+    else :
+        src_num = request.form["src_num"]
+        src_name = request.form["src_name"]
+        return render_template('map.html', value_num=src_num, value_name=src_name)
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', threaded=True)
+    app.run(host='0.0.0.0', threaded=True, debug=True)
