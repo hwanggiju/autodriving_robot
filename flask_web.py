@@ -42,8 +42,7 @@ known_face_names = [
 app = Flask(__name__)
 
 # 카메라 ON
-global cap 
-cap = cv2.VideoCapture(cv2.CAP_V4L2)
+# cap = cv2.VideoCapture(0)
 
 def user_detect(frame) :
     global name
@@ -66,7 +65,9 @@ def user_detect(frame) :
     return name
     
 def gen_frame():
-    global user, cap
+    global user
+    # 카메라 ON
+    cap = cv2.VideoCapture(0)
     while True:
         success, frame = cap.read()
         if success:
@@ -115,7 +116,9 @@ def stream():
 
 @app.route('/requests', methods=['POST', 'GET'])
 def tasks() :
-    global switch, cap, name
+    global switch, name
+    # 카메라 ON
+    cap = cv2.VideoCapture(0)
     if request.method == 'POST' :
         if request.form.get('clicked') == 'User':
             global user
