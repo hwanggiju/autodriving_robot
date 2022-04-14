@@ -43,7 +43,7 @@ app = Flask(__name__)
 
 # 카메라 ON
 global cap 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(cv2.CAP_V4L2)
 
 def user_detect(frame) :
     global name
