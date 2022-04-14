@@ -42,7 +42,7 @@ known_face_names = [
 app = Flask(__name__)
 
 def user_detect(frame) :
-    global name
+    global name, cap
     # 카메라 ON
     cap = cv2.VideoCapture(0)
     rgb_frame = frame[:, :, ::-1]
