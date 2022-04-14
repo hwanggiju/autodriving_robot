@@ -41,7 +41,7 @@ known_face_names = [
 # 어플리케이션 선언
 app = Flask(__name__)
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(-1)
 
 def user_detect(frame) :
     global name
