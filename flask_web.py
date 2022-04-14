@@ -12,7 +12,7 @@ import serial
 from random import random
 import json
 
-global user, switch, name, cap
+global user, switch, name
 user = 0 
 switch = 1 
 name = 'Unknown'
