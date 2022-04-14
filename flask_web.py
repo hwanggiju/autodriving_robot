@@ -66,6 +66,8 @@ def user_detect(frame) :
     
 def gen_frame():
     global user
+    # 카메라 ON
+    cap = cv2.VideoCapture(0)
     while True:
         success, frame = cap.read()
         if success:
