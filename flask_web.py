@@ -13,8 +13,8 @@ from random import random
 import json
 
 global user, switch, name
-user = 0
-switch = 1
+user = 0 
+switch = 1 
 name = 'Unknown'
 
 # 이미지 학습 전처리
@@ -41,11 +41,10 @@ known_face_names = [
 # 어플리케이션 선언
 app = Flask(__name__)
 
-# 카메라 ON
-cap = cv2.VideoCapture(0)
-
 def user_detect(frame) :
     global name
+    # 카메라 ON
+    cap = cv2.VideoCapture(0)
     rgb_frame = frame[:, :, ::-1]
     
     face_locations = face_recognition.face_locations(rgb_frame) # 찾은 얼굴 값
@@ -66,8 +65,10 @@ def user_detect(frame) :
     
 def gen_frame():
     global user
+    
     # 카메라 ON
     cap = cv2.VideoCapture(0)
+    
     while True:
         success, frame = cap.read()
         if success:
@@ -116,7 +117,11 @@ def stream():
 
 @app.route('/requests', methods=['POST', 'GET'])
 def tasks() :
-    global switch, name, cap
+    global switch, name
+    
+    # 카메라 ON
+    cap = cv2.VideoCapture(0)
+    
     if request.method == 'POST' :
         if request.form.get('clicked') == 'User':
             global user
