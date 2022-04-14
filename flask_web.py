@@ -114,7 +114,7 @@ def stream():
 
 @app.route('/requests', methods=['POST', 'GET'])
 def tasks() :
-    global switch, name, cap
+    global switch, name
     if request.method == 'POST' :
         if request.form.get('clicked') == 'User':
             global user
