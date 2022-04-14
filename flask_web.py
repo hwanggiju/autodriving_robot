@@ -41,7 +41,7 @@ known_face_names = [
 # 어플리케이션 선언
 app = Flask(__name__)
 
-cap = cv2.VideoCapture(-1)
+cap = cv2.VideoCapture(0)
 
 def user_detect(frame) :
     global name
@@ -63,7 +63,7 @@ def user_detect(frame) :
         
     return name
     
-def gen_frame():
+def gen_frame(cap):
     global user
     
     while True:
@@ -110,7 +110,8 @@ def live_data():
 
 @app.route('/stream')
 def stream():
-    return Response(gen_frame(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    global cap
+    return Response(gen_frame(cap), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/requests', methods=['POST', 'GET'])
 def tasks() :
