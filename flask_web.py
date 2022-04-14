@@ -42,9 +42,7 @@ known_face_names = [
 app = Flask(__name__)
 
 def user_detect(frame) :
-    global name, cap
-    # 카메라 ON
-    cap = cv2.VideoCapture(0)
+    global name
     rgb_frame = frame[:, :, ::-1]
     
     face_locations = face_recognition.face_locations(rgb_frame) # 찾은 얼굴 값
@@ -64,7 +62,7 @@ def user_detect(frame) :
     return name
     
 def gen_frame():
-    global user
+    global user, cap
     
     # 카메라 ON
     cap = cv2.VideoCapture(0)
