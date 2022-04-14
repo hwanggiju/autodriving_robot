@@ -41,6 +41,8 @@ known_face_names = [
 # 어플리케이션 선언
 app = Flask(__name__)
 
+cap = cv2.VideoCapture(0)
+
 def user_detect(frame) :
     global name
     rgb_frame = frame[:, :, ::-1]
@@ -62,7 +64,7 @@ def user_detect(frame) :
     return name
     
 def gen_frame():
-    global user, cap
+    global user
     
     while True:
         success, frame = cap.read()
