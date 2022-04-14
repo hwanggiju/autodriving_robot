@@ -12,7 +12,7 @@ import serial
 from random import random
 import json
 
-global user, switch, name # 전역변수 선언
+global user, switch, name
 user = 0
 switch = 1
 name = 'Unknown'
@@ -42,6 +42,7 @@ known_face_names = [
 app = Flask(__name__)
 
 # 카메라 ON
+global cap 
 cap = cv2.VideoCapture(0)
 
 def user_detect(frame) :
@@ -65,7 +66,7 @@ def user_detect(frame) :
     return name
     
 def gen_frame():
-    global user
+    global user, cap
     while True:
         success, frame = cap.read()
         if success:
