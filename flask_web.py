@@ -117,10 +117,7 @@ def stream():
 
 @app.route('/requests', methods=['POST', 'GET'])
 def tasks() :
-    global switch, name
-    
-    # 카메라 ON
-    cap = cv2.VideoCapture(0)
+    global switch, name, cap
     
     if request.method == 'POST' :
         if request.form.get('clicked') == 'User':
