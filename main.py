@@ -19,13 +19,13 @@ name = 'Unknown'
 
 # 이미지 학습 전처리
 # C:/opencv/development/face/
-obama_image = face_recognition.load_image_file("obama.jpg")
+obama_image = face_recognition.load_image_file("C:/opencv/development/face/obama.jpg")
 obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
 
-biden_image = face_recognition.load_image_file("biden.jpg")
+biden_image = face_recognition.load_image_file("C:/opencv/development/face/biden.jpg")
 biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
 
-giju_image = face_recognition.load_image_file("giju_image.jpg")
+giju_image = face_recognition.load_image_file("C:/opencv/development/face/giju_image.jpg")
 giju_face_encoding = face_recognition.face_encodings(giju_image)[0]
 
 known_face_encodings = [
