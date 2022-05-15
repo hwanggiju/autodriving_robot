@@ -39,7 +39,7 @@ known_face_names = [
     "Gi ju"
 ]
 # 어플리케이션 선언
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 cap = cv2.VideoCapture(0)
 
@@ -136,17 +136,9 @@ def tasks() :
     
     return render_template('main.html', value=name)
 
-@app.route('/method', methods=['GET', 'POST'])
-def method() :
-    if request.method == 'GET' :
-        src_num = request.args["src_num"]
-        src_name = request.args.get["src_name"]
-        return render_template('map.html', value_num=src_num, value_name=src_name)
-    
-    else :
-        src_num = request.form["src_num"]
-        src_name = request.form["src_name"]
-        return render_template('map.html', value_num=src_num, value_name=src_name)
+@app.route('/txt', methods=['GET', 'POST'])
+def read_txt() :
+    return render_template('map.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
