@@ -10,5 +10,5 @@ conn.execute(
     create table users (email text, name text)
     ''')
 print('create table')
-
+conn.commit()
 conn.close()
