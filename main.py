@@ -8,9 +8,10 @@ import face_recognition
 import numpy as np
 from threading import Thread
 from time import time 
-import serial
+# import serial
 from random import random
 import json
+import os
 
 global user, switch, name
 user = 0 
@@ -92,7 +93,7 @@ def bridge_sensor():
 
 @app.route("/Map")
 def bridge_map():
-    return render_template('map.html')
+    return render_template('map.hta')
 
 @app.route('/live-data')
 def live_data():
@@ -134,11 +135,11 @@ def tasks() :
     elif request.method == 'GET' :
         return render_template('main.html')
     
-    return render_template('main.html', value=name)
-
-@app.route('/txt', methods=['GET', 'POST'])
-def read_txt() :
+    return render_template('main.html', value = name)
+'''
+@app.route('/tmp')
+def tmp() :
     return render_template('map.html')
-
+'''
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)

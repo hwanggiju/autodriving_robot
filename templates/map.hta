@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MAP</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <HTA:APPLICATION ID="MyhtaApp" 
+         APPLICATIONNAME="Application Executer" 
+         BORDER="no"
+         CAPTION="yes"
+         SHOWINTASKBAR="yes"
+         SINGLEINSTANCE="yes"
+         SYSMENU="yes"
+         SCROLL="no"
+         WINDOWSTATE="normal">
+    <script type="text/javascript" language="javascript">
+      function RunFile() {
+      WshShell = new ActiveXObject("WScript.Shell");
+      WshShell.Run("C:/Windows/SysWOW64/notepad.exe", 1, false);
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/">Camera</a>
+            <a class="navbar-brand" href="/Sensor">Sensor</a>
+            <a class="navbar-brand" href="/Map">Map</a>
+          </div>
+        </div>
+    </div>
+
+    <div class="jumbotron">
+      <div class="container-fluid">
+        <br/>
+        <p>MAP</p>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+          <input type='button', value='test', onclick='RunFile();'>
+      </div>
+    </div>
+
+    <hr>
+      <footer>
+        <p>&copy; 613-1 Lab</p>
+      </footer>
+    </div>
+  </body>
+</html>
