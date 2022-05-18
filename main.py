@@ -93,7 +93,7 @@ def bridge_sensor():
 
 @app.route("/Map")
 def bridge_map():
-    return render_template('map.hta')
+    return render_template('map.html')
 
 @app.route('/live-data')
 def live_data():

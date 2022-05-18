@@ -7,20 +7,19 @@
     <title>MAP</title>
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-    <HTA:APPLICATION ID="MyhtaApp" 
-         APPLICATIONNAME="Application Executer" 
-         BORDER="no"
-         CAPTION="yes"
-         SHOWINTASKBAR="yes"
-         SINGLEINSTANCE="yes"
-         SYSMENU="yes"
-         SCROLL="no"
-         WINDOWSTATE="normal">
-    <script type="text/javascript" language="javascript">
+    <script>
       function RunFile() {
-      WshShell = new ActiveXObject("WScript.Shell");
-      WshShell.Run("C:/Windows/SysWOW64/notepad.exe", 1, false);
+        Runtime rt = Runtime.getRuntime();
+
+        String file = 'C:/ProgramData/Microsoft/Windows/Start Menu/Programs/PuTTY (64-bit)/PuTTY'
+        Process pro;
+      }
+      try {
+        pro = rt.exec(file);
+        pro.waitFor();
+      }
+      catch(Exception e) {
+        e.printStackTrace();
       }
     </script>
   </head>
@@ -45,7 +44,7 @@
 
     <div class="container-fluid">
       <div class="row">
-          <input type='button', value='test', onclick='RunFile();'>
+          <input type='button', value='test', onclick='RunFile();'/>
       </div>
     </div>
 
