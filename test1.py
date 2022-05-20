@@ -1,35 +1,41 @@
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
 import sys
-import time
+import os
 
+class MainWindow(QWidget):
 
-def flush_then_wait():
-    sys.stdout.flush()
-    sys.stderr.flush()
-    time.sleep(0.5)
+    def __init__(self):
+        super().__init__()
 
+        self.btn_start = QPushButton('start')
+        self.btn_start.clicked.connect(self.addText)
+        
+        self.btn_stop = QPushButton('stop')
+        self.btn_start.clicked.connect(self.stopText)
+        self.tb = QTextBrowser()        
 
-sys.stdout.write("Script stdout 1\n")
-sys.stdout.write("Script stdout 2\n")
-sys.stdout.write("Script stdout 3\n")
-sys.stderr.write("Total time: 00:05:00\n")
-sys.stderr.write("Total complete: 10%\n")
-flush_then_wait()
+        vbox = QVBoxLayout()
+        vbox.addWidget(self.btn_start)
+        vbox.addWidget(self.btn_stop)
+        vbox.addWidget(self.tb)
 
-sys.stdout.write("name=Martin\n")
-sys.stdout.write("Script stdout 4\n")
-sys.stdout.write("Script stdout 5\n")
-sys.stderr.write("Total complete: 30%\n")
-flush_then_wait()
+        self.setLayout(vbox)
+        
+        self.setWindowTitle('test')
+        self.setGeometry(500, 500, 500, 600)
+        self.show()
+        
+    def addText(self) :
+        while (True) :
+            self.result = os.system("C:/opencv/development/face/dist/test.exe")
+            self.tb.append(self.result)
+            if self.btn_stop :
+                self.stopText()
+            
+    def stopText(self) :
+        self.tb.clear()
 
-sys.stderr.write("Elapsed time: 00:00:10\n")
-sys.stderr.write("Elapsed time: 00:00:50\n")
-sys.stderr.write("Total complete: 50%\n")
-sys.stdout.write("country=Nederland\n")
-flush_then_wait()
-
-sys.stderr.write("Elapsed time: 00:01:10\n")
-sys.stderr.write("Total complete: 100%\n")
-sys.stdout.write("Script stdout 6\n")
-sys.stdout.write("Script stdout 7\n")
-sys.stdout.write("website=www.mfitzp.com\n")
-flush_then_wait()
+app = QApplication(sys.argv)
+inst = MainWindow()
+app.exec_()

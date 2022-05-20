@@ -7,21 +7,6 @@
     <title>MAP</title>
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <script>
-      function RunFile() {
-        Runtime rt = Runtime.getRuntime();
-
-        String file = 'C:/ProgramData/Microsoft/Windows/Start Menu/Programs/PuTTY (64-bit)/PuTTY'
-        Process pro;
-      }
-      try {
-        pro = rt.exec(file);
-        pro.waitFor();
-      }
-      catch(Exception e) {
-        e.printStackTrace();
-      }
-    </script>
   </head>
 
   <body>
@@ -44,10 +29,11 @@
 
     <div class="container-fluid">
       <div class="row">
-          <input type='button', value='test', onclick='RunFile();'/>
+
+        <script language = 'javascr'>
+
       </div>
     </div>
-
     <hr>
       <footer>
         <p>&copy; 613-1 Lab</p>

@@ -136,10 +136,10 @@ def tasks() :
         return render_template('main.html')
     
     return render_template('main.html', value = name)
-'''
-@app.route('/tmp')
-def tmp() :
-    return render_template('map.html')
-'''
+
+
+@app.route('/print_result')
+def print_result() :
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
