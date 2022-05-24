@@ -1,4 +1,6 @@
 file = open('map.txt', 'r')
+lst_line = []
 line = file.readlines()
-file.close
-print(line)
+lst_line.append(line)
+file.close()
+print(lst_line)
