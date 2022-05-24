@@ -29,9 +29,12 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div style='font-size:1px'>
-          <div class = 'print'> {{value}} </div>
-        </div> 
+        <script language = 'JavaScript'>
+          var string_lst = {{string_lst|tojson}};
+          for (i = 0; i < string_lst.length; i++){
+            document.write(string_lst[i] + "<br>");
+        }
+        </script>
       </div>
     </div>
     <hr>

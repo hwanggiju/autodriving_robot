@@ -93,20 +93,39 @@ def bridge_sensor():
 
 @app.route("/Map")
 def bridge_map():
-    '''
-    # 0 : no data, 1 : 라이다 센싱 2 : 벽 3 : 목적지, 4 : 빈공간, 5 : 현재 로봇 위치, 6 : 경로 
-    file = open('map.txt', 'r')
-    line = file.readlines() # 한줄 한줄 읽어오기
-    line.rstrip("\n") # 문자열 오른쪽 끝 널 값 제거  
-    lst_line = list(map(int, line)) # 문자열 하나씩 리스트 정수형으로 저장
-    file.close()
-    return render_template('map.html', value = lst_line)
-    '''
+    # 0 : no data, 1 : 라이다 센싱, 2 : 벽, 3 : 목적지, 4 : 빈공간, 5 : 현재 로봇 위치, 6 : 경로 
     with open("C:/opencv/development/face/map.txt", mode = "rt", encoding = 'utf-8') as f :
-        stringList =f.readlines()
-        item = stringList[0] # 문자열 형식
-        # item_lst = list(map(int, item)) # 문자 하나씩 쪼개어 리스트에 저장 -> 정수형
-    return render_template('map.html', value = item)
+        line = f.readlines()
+        tmp_lst = [[] for i in range(15)]
+        item_lst = list(line) # 문자 하나씩 쪼개어 리스트에 저장 -> 정수형
+        string_lst = []
+        print(item_lst)
+        cnt = 0
+        for i in item_lst :
+            line_lst = list(i)
+            # 아스키코드 변환 표 참고
+            for j in range(0, len(line_lst)) :
+                if line_lst[j] == '0':
+                    tmp_lst[cnt].append(chr(32))
+                elif line_lst[j] == '1' :
+                    tmp_lst[cnt].append(chr(49))
+                elif line_lst[j] == '2' :
+                    tmp_lst[cnt].append(chr(254))
+                elif line_lst[j] == '3' :
+                    tmp_lst[cnt].append(chr(94))
+                elif line_lst[j] == '4' :
+                    tmp_lst[cnt].append(chr(92))
+                elif line_lst[j] == '5' :
+                    tmp_lst[cnt].append(chr(64))
+                elif line_lst[j] == '6' :
+                    tmp_lst[cnt].append(chr(80))
+            cnt += 1
+            
+        for i in tmp_lst :
+            result = ''.join(s for s in i)
+            string_lst.append(result)
+            
+    return render_template('map.html', string_lst = string_lst)
 
 @app.route('/live-data')
 def live_data():
