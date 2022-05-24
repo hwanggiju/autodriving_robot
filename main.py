@@ -20,13 +20,13 @@ name = 'Unknown'
 
 # 이미지 학습 전처리
 # C:/opencv/development/face/
-obama_image = face_recognition.load_image_file("C:/opencv/development/face/image_dir/obama.jpg")
+obama_image = face_recognition.load_image_file("obama.jpg")
 obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
 
-biden_image = face_recognition.load_image_file("C:/opencv/development/face/image_dir/biden.jpg")
+biden_image = face_recognition.load_image_file("biden.jpg")
 biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
 
-giju_image = face_recognition.load_image_file("C:/opencv/development/face/image_dir/giju_image.jpg")
+giju_image = face_recognition.load_image_file("giju_image.jpg")
 giju_face_encoding = face_recognition.face_encodings(giju_image)[0]
 
 known_face_encodings = [
@@ -137,9 +137,13 @@ def tasks() :
     
     return render_template('main.html', value = name)
 
-
-@app.route('/print_result')
-def print_result() :
-
+def file_load() :
+    file = open('map.txt', 'r')
+    line = file.readlines()
+    return render_template('map.html', value = line)
+    
+    f.close
+    
+    
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
