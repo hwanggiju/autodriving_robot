@@ -1,4 +1,4 @@
-import time
-for i in range(11) :
-    print(i)
-    time.sleep(1)
+file = open('map.txt', 'r')
+line = file.readlines().split('\n')
+file.close
+print(line)
