@@ -139,8 +139,11 @@ def tasks() :
 
 def file_load() :
     file = open('map.txt', 'r')
-    line = file.readlines().split('\n')
-    return render_template('map.html', value = line)
+    lst_line = []
+    line = file.readlines()
+    lst_line.append(line).split('\n')
+    file.close()
+    return render_template('map.html', value = lst_line)
     
     f.close
     
