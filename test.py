@@ -1,4 +1,4 @@
 file = open('map.txt', 'r')
-line = file.readlines().split('\n')
+line = file.readlines()
 file.close
 print(line)
