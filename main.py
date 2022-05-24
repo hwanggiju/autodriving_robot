@@ -137,6 +137,7 @@ def tasks() :
     
     return render_template('main.html', value = name)
 
+@app.route('/file_load')
 def file_load() :
     file = open('map.txt', 'r')
     lst_line = []
@@ -144,9 +145,6 @@ def file_load() :
     lst_line.append(line)
     file.close()
     return render_template('map.html', value = lst_line)
-    
-    f.close
-    
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
