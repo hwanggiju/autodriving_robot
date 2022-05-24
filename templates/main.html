@@ -28,16 +28,14 @@
         </div>
     </div>
 
-    <div class='container'>
+    <div class='container-fluid'>
         <div class='row'>
-            <div class = 'col-lg-8  offset-lg-2'>
-                    <form method='post', action="{{url_for('tasks')}}">
-                    <input type="submit" value="Stop/Start" name="stop" />
-                    <input type="submit" value="User" name="clicked" />
-                    </form>
-                <img src="{{ url_for('stream') }}" height="80%">
-                <div class='print'> 사용자 {{value}} 확인했습니다.  </div>
-            </div>
+          <form method='post', action="{{url_for('tasks')}}">
+            <input type="submit" value="Stop/Start" name="stop" />
+            <input type="submit" value="User" name="clicked" />
+          </form>
+          <img src="{{ url_for('stream') }}" height="30%" width="30%">
+          <div class='print'> 사용자 {{value}} 확인했습니다.  </div>
         </div>
     </div>
     <hr>

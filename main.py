@@ -20,13 +20,13 @@ name = 'Unknown'
 
 # 이미지 학습 전처리
 # C:/opencv/development/face/
-obama_image = face_recognition.load_image_file("image_dir/obama.jpg")
+obama_image = face_recognition.load_image_file("C:/opencv/development/face/image_dir/obama.jpg")
 obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
 
-biden_image = face_recognition.load_image_file("image_dir/biden.jpg")
+biden_image = face_recognition.load_image_file("C:/opencv/development/face/image_dir/biden.jpg")
 biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
 
-giju_image = face_recognition.load_image_file("image_dir/giju_image.jpg")
+giju_image = face_recognition.load_image_file("C:/opencv/development/face/image_dir/giju_image.jpg")
 giju_face_encoding = face_recognition.face_encodings(giju_image)[0]
 
 known_face_encodings = [
@@ -93,13 +93,20 @@ def bridge_sensor():
 
 @app.route("/Map")
 def bridge_map():
-    # 0 : no data, 1 : 라이다 센싱(노) 2 : 벽() 3 : 목적지, 4 : 빈공간, 5 : 현재 로봇 위치, 6 : 경로 
+    '''
+    # 0 : no data, 1 : 라이다 센싱 2 : 벽 3 : 목적지, 4 : 빈공간, 5 : 현재 로봇 위치, 6 : 경로 
     file = open('map.txt', 'r')
-    lst_line = []
-    line = file.readlines()
-    lst_line.append(line)
+    line = file.readlines() # 한줄 한줄 읽어오기
+    line.rstrip("\n") # 문자열 오른쪽 끝 널 값 제거  
+    lst_line = list(map(int, line)) # 문자열 하나씩 리스트 정수형으로 저장
     file.close()
     return render_template('map.html', value = lst_line)
+    '''
+    with open("C:/opencv/development/face/map.txt", mode = "rt", encoding = 'utf-8') as f :
+        stringList =f.readlines()
+        item = stringList[0] # 문자열 형식
+        # item_lst = list(map(int, item)) # 문자 하나씩 쪼개어 리스트에 저장 -> 정수형
+    return render_template('map.html', value = item)
 
 @app.route('/live-data')
 def live_data():
