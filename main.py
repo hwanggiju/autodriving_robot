@@ -93,7 +93,12 @@ def bridge_sensor():
 
 @app.route("/Map")
 def bridge_map():
-    return render_template('map.html')
+    file = open('map.txt', 'r')
+    lst_line = []
+    line = file.readlines()
+    lst_line.append(line)
+    file.close()
+    return render_template('map.html', value = lst_line)
 
 @app.route('/live-data')
 def live_data():
@@ -136,15 +141,6 @@ def tasks() :
         return render_template('main.html')
     
     return render_template('main.html', value = name)
-
-@app.route('/file_load')
-def file_load() :
-    file = open('map.txt', 'r')
-    lst_line = []
-    line = file.readlines()
-    lst_line.append(line)
-    file.close()
-    return render_template('map.html', value = lst_line)
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
