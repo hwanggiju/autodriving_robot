@@ -93,6 +93,7 @@ def bridge_sensor():
 
 @app.route("/Map")
 def bridge_map():
+    # 0 : no data, 1 : 라이다 센싱(노) 2 : 벽() 3 : 목적지, 4 : 빈공간, 5 : 현재 로봇 위치, 6 : 경로 
     file = open('map.txt', 'r')
     lst_line = []
     line = file.readlines()
