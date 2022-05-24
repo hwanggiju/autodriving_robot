@@ -141,7 +141,7 @@ def file_load() :
     file = open('map.txt', 'r')
     lst_line = []
     line = file.readlines()
-    lst_line.append(line).split('\n')
+    lst_line.append(line)
     file.close()
     return render_template('map.html', value = lst_line)
     
