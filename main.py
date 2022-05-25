@@ -96,7 +96,7 @@ def bridge_map():
     # 0 : no data, 1 : 라이다 센싱, 2 : 벽, 3 : 목적지, 4 : 빈공간, 5 : 현재 로봇 위치, 6 : 경로 
     with open("map.txt", mode = "rt", encoding = 'utf-8') as f :
         line = f.readlines()
-        tmp_lst = [[] for i in range(15)]
+        tmp_lst = [[] for i in range(3000)]
         item_lst = list(line) # 문자 하나씩 쪼개어 리스트에 저장 -> 정수형
         string_lst = []
         print(item_lst)
