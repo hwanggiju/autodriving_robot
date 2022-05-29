@@ -178,7 +178,7 @@ def gostop() :
                 
             if ch == 's' :
                 ser.write(ch.encode())
-        return
+    return render_template('test.html')  
         
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
