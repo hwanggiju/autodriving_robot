@@ -14,7 +14,7 @@ from random import random
 import json
 import os
 
-global user, switch, name, ch
+global user, switch, name
 user = 0 
 switch = 1 
 name = 'Unknown'
@@ -83,7 +83,7 @@ def gen_frame(cap):
                 pass
         else :
             pass
-    
+'''
 def serial_start(ch) :
     port = '/dev/ttyACM0'
     brate = 9600
@@ -96,6 +96,7 @@ def serial_start(ch) :
             
         if cmd == 's' :
             ser.write(ch.encode())  
+'''
 
 @app.route('/')
 def index():
@@ -107,8 +108,6 @@ def bridge_sensor():
 
 @app.route('/Control')
 def control() :
-    global ch
-    Response(serial_start(ch))
     return render_template('test.html')
 
 @app.route("/Map")
@@ -165,15 +164,18 @@ def tasks() :
     
 @app.route('/request_1', methods=['POST'])
 def gostop() :
-    global ch
-    if request.method == 'POST':
-        if request.form.get('go') == 'GO' :
-            ch = 'g'
-            return serial_start(ch)
-            
-        if request.form.get('motor_stop') == 'STOP' :
-            ch = 's'
-            return serial_start(ch)
+    port = '/dev/ttyACM0'
+    brate = 9600
+    ser = serial.Serial(port, brate, timeout=None)
+    while True :
+        if request.method == 'POST':
+            if request.form.get('g') == 'GO' :
+                ch = 'g'
+                ser.write(ch.encode())
+                
+            if request.form.get('s') == 'STOP' :
+                ch = 's'
+                ser.write(ch.encode())
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
