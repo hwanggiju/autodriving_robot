@@ -109,8 +109,6 @@ def bridge_sensor():
 
 @app.route('/Control')
 def control() :
-    global ch
-    Response(serial_start(ch))
     return render_template('test.html')
 
 @app.route("/Map")
@@ -141,6 +139,11 @@ def live_data():
 def stream():
     global cap
     return Response(gen_frame(cap), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/serial')
+def serial_() :
+    global ch
+    return Response(serial_start(ch))
 
 @app.route('/requests', methods=['POST', 'GET'])
 def tasks() :
