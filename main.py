@@ -8,7 +8,7 @@ import face_recognition
 import numpy as np
 from threading import Thread
 from time import time 
-# import serial
+import serial
 from random import random
 import json
 import os
@@ -149,6 +149,9 @@ def stream():
 @app.route('/requests', methods=['POST', 'GET'])
 def tasks() :
     global switch, name, cap
+    port = '/dev/ttyACM0'
+    brate = 9600
+    ser = serial.Serial(port, brate, timeout=None)
     
     if request.method == 'POST' :
         if request.form.get('clicked') == 'User':
@@ -163,6 +166,13 @@ def tasks() :
             else :
                 cap = cv2.VideoCapture(0)
                 switch = 1
+                
+        elif request.form.get('go') == 'GO' :
+            ser.write('go')
+            return 
+        elif request.form.get('stop') == 'STOP' :
+            ser.write('stop')
+            return 
                 
     elif request.method == 'GET' :
         return render_template('main.html')
