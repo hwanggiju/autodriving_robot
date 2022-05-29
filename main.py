@@ -99,7 +99,6 @@ def bridge_map():
         tmp_lst = [[] for i in range(1000)]
         item_lst = list(line) # 문자열 리스트에 저장
         # string_lst = []
-        print(item_lst)
         # cnt = 0
         '''
         for i in item_lst :
@@ -169,10 +168,10 @@ def tasks() :
                 cap = cv2.VideoCapture(0)
                 switch = 1
                 
-        elif request.form.get('go') == 'GO' :
+        elif request.form.get('go') == 'g' :
             ser.write('go') # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
             return render_template('index.html')
-        elif request.form.get('stop') == 'STOP' :
+        elif request.form.get('stop') == 's' :
             ser.write('stop') # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
             return render_template('index.html')
                 
