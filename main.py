@@ -107,10 +107,6 @@ def index():
 def bridge_sensor():
     return render_template('index.html')
 
-@app.route('/Control')
-def control() :
-    return render_template('test.html')
-
 @app.route("/Map")
 def bridge_map():
     # 0 : no data, 1 : 라이다 센싱, 2 : 벽, 3 : 목적지, 4 : 빈공간, 5 : 현재 로봇 위치, 6 : 경로 
@@ -163,21 +159,22 @@ def tasks() :
     
     return render_template('main.html', value = name)
     
-@app.route('/request', methods=['POST'])
-def gostop() :
+@app.route('/Control', methods=['POST'])
+def control() :
     port = '/dev/ttyACM0'
     brate = 9600
     ser = serial.Serial(port, brate, timeout=None)
     
     while True :
-        if request.method == 'POST':
-            ch = request.form.get('comm')
-            
-            if ch == 'g' :
-                ser.write(ch.encode())
-                
-            if ch == 's' :
-                ser.write(ch.encode())
+        ch = request.form.get('comm')
         
+        if ch == 'g' :
+            ser.write(ch.encode())
+            
+        if ch == 's' :
+            ser.write(ch.encode())
+                
+    return render_template('test.html')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
