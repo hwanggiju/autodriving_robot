@@ -187,9 +187,9 @@ def gostop() :
     while True :
         if request.method == 'POST':
             if request.form.get('go') == 'GO' :
-                ser.write('g'.encode()) # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
+                ser.write('g'.encode('utf-8')) # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
             if request.form.get('motor_stop') == 'STOP' :
-                ser.write('s'.encode())
+                ser.write('s'.encode('utf-8'))
                 return render_template('test.html')
     
 if __name__ == '__main__':
