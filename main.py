@@ -96,14 +96,16 @@ def bridge_map():
     # 0 : no data, 1 : 라이다 센싱, 2 : 벽, 3 : 목적지, 4 : 빈공간, 5 : 현재 로봇 위치, 6 : 경로 
     with open("map.txt", mode = "rt", encoding = 'utf-8') as f :
         line = f.readlines()
-        tmp_lst = [[] for i in range(3000)]
-        item_lst = list(line) # 문자 하나씩 쪼개어 리스트에 저장 -> 정수형
-        string_lst = []
+        tmp_lst = [[] for i in range(1000)]
+        item_lst = list(line) # 문자열 리스트에 저장
+        # string_lst = []
         print(item_lst)
-        cnt = 0
+        # cnt = 0
+        '''
         for i in item_lst :
-            line_lst = list(i)
+            line_lst = list(i) # 문자열 문자 쪼개어 리스트 저장
             # 아스키코드 변환 표 참고
+           
             for j in range(0, len(line_lst)) :
                 if line_lst[j] == '0':
                     tmp_lst[cnt].append(chr(32))
@@ -124,8 +126,8 @@ def bridge_map():
         for i in tmp_lst :
             result = ''.join(s for s in i)
             string_lst.append(result)
-            
-    return render_template('map.html', string_lst = string_lst)
+        '''
+    return render_template('map.html', string_lst = item_lst)
 
 @app.route('/live-data')
 def live_data():
