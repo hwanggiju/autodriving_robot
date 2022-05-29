@@ -175,7 +175,7 @@ def GoStop() :
     brate = 9600
     ser = serial.Serial(port, brate, timeout=None)
     
-    if request.method('POST') :
+    if request.method == 'POST' :
         if request.form.get('g') == 'GO' :
             while True :
                 ser.write('g'.encode()) # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
