@@ -1,6 +1,7 @@
 from glob import glob
 from multiprocessing.sharedctypes import Value
 from pickle import TRUE
+from pickletools import read_uint1
 from urllib import response
 from flask import Flask, Response, render_template, request, make_response
 import cv2
@@ -88,12 +89,12 @@ def serial_start(ch) :
     port = '/dev/ttyACM0'
     brate = 9600
     ser = serial.Serial(port, brate, timeout=None)
-    
-    if ch == 'g' :
-        ser.write(ch.encode())
-        
-    if ch == 's' :
-        ser.write(ch.encode())  
+    while True :
+        if ch == 'g' :
+            ser.write(ch.encode())
+            
+        if ch == 's' :
+            ser.write(ch.encode())  
 
 @app.route('/')
 def index():
@@ -106,7 +107,8 @@ def bridge_sensor():
 @app.route('/Control')
 def control() :
     global ch
-    return Response(serial_start(ch))
+    Response(serial_start(ch))
+    return render_template('test.html')
 
 @app.route("/Map")
 def bridge_map():
@@ -166,10 +168,7 @@ def tasks() :
     
 @app.route('/request_1', methods=['POST'])
 def gostop() :
-    port = '/dev/ttyACM0'
-    brate = 9600
-    ser = serial.Serial(port, brate, timeout=None)
-    
+    global ch
     if request.method == 'POST':
         if request.form.get('go') == 'GO' :
             ch = 'g'
