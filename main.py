@@ -107,6 +107,8 @@ def bridge_sensor():
 
 @app.route('/Control')
 def control() :
+    global ch
+    Response(serial_start(ch))
     return render_template('test.html')
 
 @app.route("/Map")
@@ -167,11 +169,11 @@ def gostop() :
     if request.method == 'POST':
         if request.form.get('go') == 'GO' :
             ch = 'g'
-            return response(serial_start(ch))
+            return serial_start(ch)
             
         if request.form.get('motor_stop') == 'STOP' :
             ch = 's'
-            return response(serial_start(ch))
+            return serial_start(ch)
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
