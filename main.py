@@ -109,7 +109,6 @@ def bridge_sensor():
 
 @app.route('/Control')
 def control() :
-    Response(gostop())
     return render_template('test.html')
 
 @app.route("/Map")
