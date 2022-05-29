@@ -83,6 +83,19 @@ def gen_frame(cap):
         else :
             pass
     
+def serial_start(ch) :    
+    port = '/dev/ttyACM0'
+    brate = 9600
+    ser = serial.Serial(port, brate, timeout=None)
+    
+    while True :
+        if ch == 'g' :
+            ser.write(ch.encode())
+            
+        if ch == 's' :
+            ser.write(ch.encode())  
+    return
+
 @app.route('/')
 def index():
     return render_template('main.html')
@@ -93,6 +106,7 @@ def bridge_sensor():
 
 @app.route('/Control')
 def control() :
+    Response(serial_start())
     return render_template('test.html')
 
 @app.route("/Map")
@@ -131,6 +145,7 @@ def bridge_map():
             string_lst.append(result)
         '''
     return render_template('map.html', string_lst = item_lst)
+
 
 @app.route('/live-data')
 def live_data():
@@ -184,13 +199,17 @@ def gostop() :
     brate = 9600
     ser = serial.Serial(port, brate, timeout=None)
     
-    while True :
-        if request.method == 'POST':
-            if request.form.get('go') == 'GO' :
-                ser.write('g'.encode('utf-8')) # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
-            if request.form.get('motor_stop') == 'STOP' :
-                ser.write('s'.encode('utf-8'))
-                return render_template('test.html')
+    if request.method == 'POST':
+        if request.form.get('go') == 'GO' :
+            ch = 'g'
+            return serial_start(ch)
+            # ser.write('g'.encode('utf-8')) # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
+            
+        if request.form.get('motor_stop') == 'STOP' :
+            ch = 's'
+            return serial_start(ch)
+            # ser.write('s'.encode('utf-8'))
+            # return render_template('test.html')
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
