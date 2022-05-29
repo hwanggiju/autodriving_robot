@@ -171,15 +171,11 @@ def gostop() :
     
     while True :
         if request.method == 'POST':
-            if request.form.get('GO') == 'g' :
-                ch = request.form.get('GO')
-                if ch == 'g' :
-                    ser.write(ch.encode())
-                
-            if request.form.get('STOP') == 's' :
-                ch = request.form.get('STOP')
-                if ch == 's' :
-                    ser.write(ch.encode())
+            ch = request.form.get('comm')
+            if ch == 'g' :
+                ser.write(ch.encode())
+            if ch == 's' :
+                ser.write(ch.encode())
     return response
         
 if __name__ == '__main__':

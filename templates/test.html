@@ -31,9 +31,9 @@
 
     <div class='container-fluid'>
         <div class='row'>
-          <form method='post', action="{{url_for('gostop')}}">
-            <input type="submit" value="g" name="GO" />
-            <input type="submit" value="s" name="STOP" />
+          <form action='/request_1', method = 'POST'>
+            입력 : <input type='text' name='comm'>
+            <input type='submit' value = '전송하기'>
           </form>
         </div>
     </div>
