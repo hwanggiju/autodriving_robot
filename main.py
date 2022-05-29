@@ -168,11 +168,11 @@ def tasks() :
                 switch = 1
                 
         elif request.form.get('go') == 'GO' :
-            ser.write('go')
-            return 
+            ser.write('go') # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
+            return render_template('index.html')
         elif request.form.get('stop') == 'STOP' :
-            ser.write('stop')
-            return 
+            ser.write('stop') # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
+            return render_template('index.html')
                 
     elif request.method == 'GET' :
         return render_template('main.html')
