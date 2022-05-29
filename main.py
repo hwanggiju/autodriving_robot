@@ -168,11 +168,11 @@ def tasks() :
                 cap = cv2.VideoCapture(0)
                 switch = 1
                 
-        elif request.form.get('g') == 'GO' :
-            ser.write('go') # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
+        elif request.form.get('go') == 'GO' :
+            ser.write('g') # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
             return render_template('index.html')
-        elif request.form.get('s') == 'STOP' :
-            ser.write('stop') # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
+        elif request.form.get('stop') == 'STOP' :
+            ser.write('s') # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
             return render_template('index.html')
                 
     elif request.method == 'GET' :
