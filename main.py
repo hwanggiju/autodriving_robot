@@ -13,7 +13,7 @@ from random import random
 import json
 import os
 
-global user, switch, name
+global user, switch, name, ch
 user = 0 
 switch = 1 
 name = 'Unknown'
@@ -116,36 +116,8 @@ def bridge_map():
         line = f.readlines()
         tmp_lst = [[] for i in range(1000)]
         item_lst = list(line) # 문자열 리스트에 저장
-        # string_lst = []
-        # cnt = 0
-        '''
-        for i in item_lst :
-            line_lst = list(i) # 문자열 문자 쪼개어 리스트 저장
-            # 아스키코드 변환 표 참고
-           
-            for j in range(0, len(line_lst)) :
-                if line_lst[j] == '0':
-                    tmp_lst[cnt].append(chr(32))
-                elif line_lst[j] == '1' :
-                    tmp_lst[cnt].append(chr(49))
-                elif line_lst[j] == '2' :
-                    tmp_lst[cnt].append(chr(254))
-                elif line_lst[j] == '3' :
-                    tmp_lst[cnt].append(chr(94))
-                elif line_lst[j] == '4' :
-                    tmp_lst[cnt].append(chr(92))
-                elif line_lst[j] == '5' :
-                    tmp_lst[cnt].append(chr(64))
-                elif line_lst[j] == '6' :
-                    tmp_lst[cnt].append(chr(80))
-            cnt += 1
-            
-        for i in tmp_lst :
-            result = ''.join(s for s in i)
-            string_lst.append(result)
-        '''
+       
     return render_template('map.html', string_lst = item_lst)
-
 
 @app.route('/live-data')
 def live_data():
