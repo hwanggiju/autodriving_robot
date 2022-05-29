@@ -172,11 +172,13 @@ def gostop() :
     while True :
         if request.method == 'POST':
             ch = request.form.get('comm')
+            
             if ch == 'g' :
                 ser.write(ch.encode())
+                
             if ch == 's' :
                 ser.write(ch.encode())
-    return response
+        return response
         
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
