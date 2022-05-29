@@ -17,6 +17,7 @@ global user, switch, name, ch
 user = 0 
 switch = 1 
 name = 'Unknown'
+ch = ''
 
 # 이미지 학습 전처리
 # C:/opencv/development/face/
@@ -83,7 +84,7 @@ def gen_frame(cap):
         else :
             pass
     
-def serial_start(ch) : 
+def serial_start(ch) :
     port = '/dev/ttyACM0'
     brate = 9600
     ser = serial.Serial(port, brate, timeout=None)
@@ -167,8 +168,7 @@ def tasks() :
         #    return render_template('index.html')
     
 @app.route('/request_1', methods=['POST'])
-def gostop() :    
-    global ch
+def gostop() :
     port = '/dev/ttyACM0'
     brate = 9600
     ser = serial.Serial(port, brate, timeout=None)
