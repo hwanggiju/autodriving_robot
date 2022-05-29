@@ -89,13 +89,11 @@ def serial_start(ch) :
     brate = 9600
     ser = serial.Serial(port, brate, timeout=None)
     
-    while True :
-        if ch == 'g' :
-            ser.write(ch.encode())
-            
-        if ch == 's' :
-            ser.write(ch.encode())  
-    return
+    if ch == 'g' :
+        ser.write(ch.encode())
+        
+    if ch == 's' :
+        ser.write(ch.encode())  
 
 @app.route('/')
 def index():
