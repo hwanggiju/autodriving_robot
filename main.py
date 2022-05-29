@@ -18,6 +18,7 @@ global user, switch, name, ch
 user = 0 
 switch = 1 
 name = 'Unknown'
+ch = ''
 
 # 이미지 학습 전처리
 # C:/opencv/development/face/
