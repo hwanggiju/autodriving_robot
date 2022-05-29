@@ -106,8 +106,6 @@ def bridge_sensor():
 
 @app.route('/Control')
 def control() :
-    global ch
-    Response(serial_start(ch))
     return render_template('test.html')
 
 @app.route("/Map")
@@ -161,10 +159,6 @@ def tasks() :
         return render_template('main.html')
     
     return render_template('main.html', value = name)
-        
-        # elif request.form.get('stop') == 'STOP' :
-        #    ser.write('s'.encode()) # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
-        #    return render_template('index.html')
     
 @app.route('/request_1', methods=['POST'])
 def gostop() :
@@ -172,14 +166,11 @@ def gostop() :
     if request.method == 'POST':
         if request.form.get('go') == 'GO' :
             ch = 'g'
-            return serial_start(ch)
-            # ser.write('g'.encode('utf-8')) # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
+            return response(serial_start(ch))
             
         if request.form.get('motor_stop') == 'STOP' :
             ch = 's'
-            return serial_start(ch)
-            # ser.write('s'.encode('utf-8'))
-            # return render_template('test.html')
+            return response(serial_start(ch))
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
