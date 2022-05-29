@@ -184,12 +184,13 @@ def gostop() :
     brate = 9600
     ser = serial.Serial(port, brate, timeout=None)
     
-    while True :  
-        if request.form.get('go') == 'GO' :
-            ser.write('g'.encode()) # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
-        if request.form.get('motor_stop') == 'STOP' :
-            ser.write('s'.encode())
-            return render_template('test.html')
+    while True :
+        if request.method == 'POST':
+            if request.form.get('go') == 'GO' :
+                ser.write('g'.encode()) # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
+            if request.form.get('motor_stop') == 'STOP' :
+                ser.write('s'.encode())
+                return render_template('test.html')
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
