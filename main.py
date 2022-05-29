@@ -88,11 +88,13 @@ def serial_start(ch) :
     port = '/dev/ttyACM0'
     brate = 9600
     ser = serial.Serial(port, brate, timeout=None)
+    
     while True :
-        if ch == 'g' :
+        cmd = ch
+        if cmd == 'g' :
             ser.write(ch.encode())
             
-        if ch == 's' :
+        if cmd == 's' :
             ser.write(ch.encode())  
 
 @app.route('/')
