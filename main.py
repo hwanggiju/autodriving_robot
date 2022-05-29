@@ -150,12 +150,17 @@ def stream():
 @app.route('/requests', methods=['POST', 'GET'])
 def tasks() :
     global switch, name, cap
+    
+    port = '/dev/ttyACM0'
+    brate = 9600
+    ser = serial.Serial(port, brate, timeout=None)
+    
     if request.method == 'POST' :
         if request.form.get('clicked') == 'User':
             global user
             user = 1
             
-        elif request.form.get('stop') == 'Stop/Start':
+        elif request.form.get('camera_stop') == 'Stop/Start':
             if(switch==1):
                 switch = 0
                 cap.release()
@@ -163,25 +168,18 @@ def tasks() :
             else :
                 cap = cv2.VideoCapture(0)
                 switch = 1
+            
+        elif request.form.get('go') == 'GO' :
+            while True :
+                ser.write('g'.encode()) # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
+                if request.form.get('motor_stop') == 'STOP' :
+                    ser.write('s'.encode())
+                    return
                 
     elif request.method == 'GET' :
         return render_template('main.html')
     
     return render_template('main.html', value = name)
-    
-@app.route('/request_1', methods=['POST'])
-def GoStop() :
-    port = '/dev/ttyACM0'
-    brate = 9600
-    ser = serial.Serial(port, brate, timeout=None)
-    
-    if request.method == 'POST' :
-        if request.form.get('g') == 'GO' :
-            while True :
-                ser.write('g'.encode()) # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
-                if request.form.get('s') == 'STOP' :
-                    ser.write('s'.encode())
-                    return
         
         # elif request.form.get('stop') == 'STOP' :
         #    ser.write('s'.encode()) # 아두이노 데이터 전송 (동작 코드는 아두이노에서)

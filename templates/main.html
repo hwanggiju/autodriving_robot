@@ -30,10 +30,14 @@
 
     <div class='container-fluid'>
         <div class='row'>
+          
           <form method='post', action="{{url_for('tasks')}}">
-            <input type="submit" value="Stop/Start" name="stop" />
-            <input type="submit" value="User" name="clicked" />
+            <input type="submit" value="Stop/Start" name="camera_stop" />
+            <input type="submit" value="User" name="clicked" /></br>
+            <input type="submit" value="GO" name="go" />
+            <input type="submit" value="STOP" name="motor_stop" />
           </form>
+
           <img src="{{ url_for('stream') }}" height="30%" width="30%">
           <div class='print'> 사용자 {{value}} 확인했습니다.  </div>
         </div>
