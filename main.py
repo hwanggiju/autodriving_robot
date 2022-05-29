@@ -140,11 +140,6 @@ def stream():
     global cap
     return Response(gen_frame(cap), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/serial')
-def serial_() :
-    global ch
-    return Response(serial_start(ch))
-
 @app.route('/requests', methods=['POST', 'GET'])
 def tasks() :
     global switch, name, cap
@@ -174,11 +169,11 @@ def gostop() :
     if request.method == 'POST':
         if request.form.get('g') == 'GO' :
             ch = 'g'
-            return serial_start(ch)
+            return Response(serial_start(ch))
             
         if request.form.get('s') == 'STOP' :
             ch = 's'
-            return serial_start(ch)
+            return Response(serial_start(ch))
         
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
