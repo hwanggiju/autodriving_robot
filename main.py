@@ -106,7 +106,7 @@ def bridge_sensor():
 
 @app.route('/Control')
 def control() :
-    Response(serial_start())
+    Response(serial_start(ch))
     return render_template('test.html')
 
 @app.route("/Map")
