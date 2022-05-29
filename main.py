@@ -83,7 +83,7 @@ def gen_frame(cap):
         else :
             pass
     
-def serial_start(ch) :    
+def serial_start(ch) : 
     port = '/dev/ttyACM0'
     brate = 9600
     ser = serial.Serial(port, brate, timeout=None)
@@ -106,6 +106,7 @@ def bridge_sensor():
 
 @app.route('/Control')
 def control() :
+    global ch
     Response(serial_start(ch))
     return render_template('test.html')
 
@@ -167,6 +168,7 @@ def tasks() :
     
 @app.route('/request_1', methods=['POST'])
 def gostop() :    
+    global ch
     port = '/dev/ttyACM0'
     brate = 9600
     ser = serial.Serial(port, brate, timeout=None)
