@@ -91,6 +91,10 @@ def index():
 def bridge_sensor():
     return render_template('index.html')
 
+@app.route('/Control')
+def control() :
+    return render_template('test.html')
+
 @app.route("/Map")
 def bridge_map():
     # 0 : no data, 1 : 라이다 센싱, 2 : 벽, 3 : 목적지, 4 : 빈공간, 5 : 현재 로봇 위치, 6 : 경로 
@@ -151,10 +155,6 @@ def stream():
 def tasks() :
     global switch, name, cap
     
-    port = '/dev/ttyACM0'
-    brate = 9600
-    ser = serial.Serial(port, brate, timeout=None)
-    
     if request.method == 'POST' :
         if request.form.get('clicked') == 'User':
             global user
@@ -168,12 +168,6 @@ def tasks() :
             else :
                 cap = cv2.VideoCapture(0)
                 switch = 1
-        while True :  
-            if request.form.get('go') == 'GO' :
-                ser.write('g'.encode()) # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
-            if request.form.get('motor_stop') == 'STOP' :
-                ser.write('s'.encode())
-                return
                 
     elif request.method == 'GET' :
         return render_template('main.html')
@@ -183,6 +177,19 @@ def tasks() :
         # elif request.form.get('stop') == 'STOP' :
         #    ser.write('s'.encode()) # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
         #    return render_template('index.html')
+    
+@app.route('/request_1', methods=['POST'])
+def gostop() :    
+    port = '/dev/ttyACM0'
+    brate = 9600
+    ser = serial.Serial(port, brate, timeout=None)
+    
+    while True :  
+        if request.form.get('go') == 'GO' :
+            ser.write('g'.encode()) # 아두이노 데이터 전송 (동작 코드는 아두이노에서)
+        if request.form.get('motor_stop') == 'STOP' :
+            ser.write('s'.encode())
+            return render_template('test.html')
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)

@@ -4,12 +4,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MAP</title>
+    <title>Camera Streaming</title>
 
+          <!-- Bootstrap -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
   </head>
 
-  <body>
+<body>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -20,28 +22,28 @@
           </div>
         </div>
     </div>
-
     <div class="jumbotron">
-      <div class="container-fluid">
-        <br/>
-        <p>MAP</p>
-      </div>
+        <div class="container-fluid">
+          <br/>
+          <p>Streaming</p>
+        </div>
     </div>
 
-    <div class="container-fluid">
-      <div class="row">
-        <script language = 'JavaScript'>
-          var string_lst = {{string_lst|tojson}};
-          for (i = 0; i < string_lst.length; i++){
-            document.write(string_lst[i] + "<br>");
-        }
-        </script>
-      </div>
+    <div class='container-fluid'>
+        <div class='row'>
+          <form method='post', action="{{url_for('gostop')}}">
+            <input type="submit" value="GO" name="go" />
+            <input type="submit" value="STOP" name="motor_stop" />
+          </form>
+        </div>
     </div>
     <hr>
-      <footer>
-        <p>&copy; 613-1 Lab</p>
-      </footer>
-    </div>
-  </body>
+
+    <footer>
+      <p>&copy; 613-1 Lab</p>
+    </footer>
+    </div> <!-- /container -->
+
+</body>
+
 </html>
