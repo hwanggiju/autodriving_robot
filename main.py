@@ -109,6 +109,7 @@ def bridge_sensor():
 
 @app.route('/Control')
 def control() :
+    Response(gostop())
     return render_template('test.html')
 
 @app.route("/Map")
@@ -163,7 +164,7 @@ def tasks() :
     
     return render_template('main.html', value = name)
     
-@app.route('/request_1', methods=['POST'])
+@app.route('/request', methods=['POST'])
 def gostop() :
     port = '/dev/ttyACM0'
     brate = 9600
@@ -178,7 +179,6 @@ def gostop() :
                 
             if ch == 's' :
                 ser.write(ch.encode())
-    return 
         
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
