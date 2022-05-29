@@ -84,7 +84,7 @@ def gen_frame(cap):
                 pass
         else :
             pass
-
+'''
 def serial_start(ch) :
     port = '/dev/ttyACM0'
     brate = 9600
@@ -97,7 +97,7 @@ def serial_start(ch) :
             
         if cmd == 's' :
             ser.write(cmd.encode())  
-
+'''
 
 @app.route('/')
 def index():
@@ -165,15 +165,20 @@ def tasks() :
     
 @app.route('/request_1', methods=['POST'])
 def gostop() :
-    global ch
+    port = '/dev/ttyACM0'
+    brate = 9600
+    ser = serial.Serial(port, brate, timeout=None)
+    
     if request.method == 'POST':
-        if request.form.get('g') == 'GO' :
-            ch = 'g'
-            return Response(serial_start(ch))
+        if request.form.get('GO') == 'g' :
+            ch = request.form.get('GO')
+            if ch == 'g' :
+                ser.write(ch.encode())
             
-        if request.form.get('s') == 'STOP' :
-            ch = 's'
-            return Response(serial_start(ch))
+        if request.form.get('STOP') == 's' :
+            ch = request.form.get('STOP')
+            if ch == 's' :
+                ser.write(ch.encode())
         
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)
