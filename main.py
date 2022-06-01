@@ -14,11 +14,10 @@ from random import random
 import json
 import os
 
-global user, switch, name, ch
+global user, switch, name
 user = 0 
 switch = 1 
 name = 'Unknown'
-ch = ''
 
 # 이미지 학습 전처리
 # C:/opencv/development/face/
@@ -170,6 +169,7 @@ def gostop() :
     ser = serial.Serial(port, brate, timeout=None)
     
     while True :
+        ch = ''
         if request.method == 'POST' :
             
             ch = request.form.get('name')
