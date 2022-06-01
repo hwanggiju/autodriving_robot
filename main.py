@@ -173,9 +173,11 @@ def gostop() :
             ch = request.form.get('name')
 
         if ch == 'g' :
+            print(ch)
             ser.write(ch.encode())
             
         if ch == 's' :
+            print(ch)
             ser.write(ch.encode())
                     
     return render_template('test.html')
