@@ -169,7 +169,6 @@ def gostop() :
     ser = serial.Serial(port, brate, timeout=None)
     
     while True :
-        ch = ''
         if request.method == 'POST' :
             
             ch = request.form.get('name')
