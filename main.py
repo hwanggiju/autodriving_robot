@@ -117,6 +117,10 @@ def bridge_map():
        
     return render_template('map.html', string_lst = item_lst)
 
+@app.route("/Control")
+def control() :
+    return render_template('test.html')
+
 @app.route('/live-data')
 def live_data():
     '''
@@ -159,21 +163,23 @@ def tasks() :
     
     return render_template('main.html', value = name)
     
-@app.route('/Control', methods=['POST'])
-def control() :
+@app.route('/Control/requests1', methods=['POST'])
+def gostop() :
     port = '/dev/ttyACM0'
     brate = 9600
     ser = serial.Serial(port, brate, timeout=None)
     
     while True :
-        ch = request.form.get('comm')
-        
-        if ch == 'g' :
-            ser.write(ch.encode())
+        if request.method == 'POST' :
             
-        if ch == 's' :
-            ser.write(ch.encode())
+            ch = request.form.get('name')
+
+            if ch == 'g' :
+                ser.write(ch.encode())
                 
+            if ch == 's' :
+                ser.write(ch.encode())
+                    
     return render_template('test.html')
 
 if __name__ == '__main__':
