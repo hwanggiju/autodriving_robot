@@ -174,7 +174,7 @@ def gostop() :
         if ch == 'g' :
             ser.write(ch.encode())
             senser_data = ser.readline()
-            print(senser_data.decode()[:len(senser_data)-3])
+            print(senser_data.decode()[:len(senser_data)-2])
             
         if ch == 's' :
             ser.write(ch.encode())
