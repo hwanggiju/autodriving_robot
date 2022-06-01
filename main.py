@@ -172,15 +172,15 @@ def gostop() :
         if request.method == 'POST' :
             ch = request.form.get('name')
 
-        if ch == 'g' :
-            ser.write(ch.encode())
-            senser_data = ser.readline()
-            print(senser_data.decode()[:len(senser_data)-3])
-            
-        if ch == 's' :
-            ser.write(ch.encode())
-            senser_data = ser.readline()
-            print(senser_data.decode()[:len(senser_data)-3])
+            if ch == 'g' :
+                ser.write(ch.encode())
+                senser_data = ser.readline()
+                print(senser_data.decode()[:len(senser_data)-3])
+                
+            if ch == 's' :
+                ser.write(ch.encode())
+                senser_data = ser.readline()
+                print(senser_data.decode()[:len(senser_data)-3])
                     
     return render_template('test.html')
 
