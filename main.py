@@ -168,19 +168,18 @@ def gostop() :
     brate = 9600
     ser = serial.Serial(port, brate, timeout=None)
     
-    while True :
-        if request.method == 'POST' :
-            ch = request.form.get('name')
+    if request.method == 'POST' :
+        ch = request.form.get('name')
 
-            if ch == 'g' :
-                ser.write(ch.encode())
-                senser_data = ser.readline()
-                print(senser_data.decode()[:len(senser_data)-3])
-                
-            if ch == 's' :
-                ser.write(ch.encode())
-                senser_data = ser.readline()
-                print(senser_data.decode()[:len(senser_data)-3])
+        if ch == 'g' :
+            ser.write(ch.encode())
+            senser_data = ser.readline()
+            print(senser_data.decode()[:len(senser_data)-3])
+            
+        if ch == 's' :
+            ser.write(ch.encode())
+            senser_data = ser.readline()
+            print(senser_data.decode()[:len(senser_data)-2])
                     
     return render_template('test.html')
 
