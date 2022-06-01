@@ -177,8 +177,11 @@ def gostop() :
             if ch == 'g' :
                 ser.write(ch.encode())
                 
-                if ch == 's' :
-                    ser.write(ch.encode())
+            elif ch == 's' :
+                ser.write(ch.encode())
+            
+            else :
+                ser.write('s'.encode())
                     
     return render_template('test.html')
 
