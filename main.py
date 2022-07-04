@@ -163,7 +163,7 @@ try :
     @app.route('/Control/requests1', methods=['POST'])
     def gostop() :
         port = '/dev/ttyACM0'
-        brate = 9600
+        brate = 115200
         ser = serial.Serial(port, brate)
         if request.method == 'POST' :
             ch = request.form.get('name')
