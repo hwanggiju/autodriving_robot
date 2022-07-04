@@ -166,21 +166,21 @@ try :
         brate = 115200
         ser = serial.Serial(port, brate)
         if request.method == 'POST' :
-            ch = request.form.get('name')
-            if ch == 'stop' :
-                ser.write(ch.encode())
-            if ch == 'front' :
-                ser.write(ch.encode())
-            if ch == 'left' :
-                ser.write(ch.encode())
-            if ch == 'right' :
-                ser.write(ch.encode())
-            if ch == 'back' :
-                ser.write(ch.encode())
-            if ch == 'reset' :
-                ser.write(ch.encode())
-            if ch == 'Pos' :
-                ser.write(ch.encode())
+            if request.form.get('stop') == 0 :
+                ser.write('S'.encode())
+            if request.form.get('front') == 1 :
+                ser.write('F'.encode())
+            if request.form.get('left') == 2 :
+                ser.write('L'.encode())
+            if request.form.get('right') == 3 :
+                ser.write('R'.encode())
+            if request.form.get('back') == 4 :
+                ser.write('B'.encode())
+            if request.form.get('reset') == 5 :
+                ser.write('R'.encode())
+            if request.form.get('Pos') == 6 :
+                ser.write('P'.encode())
+                
         return render_template('test.html')
 
     if __name__ == '__main__':
