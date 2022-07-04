@@ -171,25 +171,27 @@ try :
     # stop, front, left, right, back, reset, Pos 명령어
     @app.route('/Control/requests1', methods=['POST'])
     def gostop() :
-        temp = 0
+        port = '/dev/ttyACM0'
+        brate = 9600
+        ser = serial.Serial(port, brate)
         while True :
             if request.method == 'POST' :
                 ch = request.form.get('name')
                 
                 if ch == 'stop' :
-                    serial_trans(str(ch))
+                    ser.write(ch.encode('utf-8'))
                 if ch == 'front' :
-                    serial_trans(str(ch))
+                    ser.write(ch.encode('utf-8'))
                 if ch == 'left' :
-                    serial_trans(str(ch))
+                    ser.write(ch.encode('utf-8'))
                 if ch == 'right' :
-                    serial_trans(str(ch))
+                    ser.write(ch.encode('utf-8'))
                 if ch == 'back' :
-                    serial_trans(str(ch))
+                    ser.write(ch.encode('utf-8'))
                 if ch == 'reset' :
-                    serial_trans(str(ch))
+                    ser.write(ch.encode('utf-8'))
                 if ch == 'Pos' :
-                    serial_trans(str(ch))
+                    ser.write(ch.encode('utf-8'))
                     
         return render_template('test.html')
 
