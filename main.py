@@ -87,15 +87,6 @@ try :
                     pass
             else :
                 pass
-            
-    # 시리얼 동작 명령어 입력 값 인코드 함수
-    def serial_trans(ch) :
-        port = '/dev/ttyACM0'
-        brate = 9600
-        ser = serial.Serial(port, brate)
-        ser.write(ch.encode('utf-8'))
-        # senser_data = ser.readline()
-        # print(senser_data.decode()[:len(senser_data)-2])
 
     # 웹 기본 화면 - 카메라 실시간 화면 표시
     @app.route('/')
@@ -190,6 +181,7 @@ try :
                 ser.write(ch.encode())
             if ch == 'Pos' :
                 ser.write(ch.encode())
+        return render_template('test.html')
 
     if __name__ == '__main__':
         app.run(host='0.0.0.0', threaded=True, debug=True)
