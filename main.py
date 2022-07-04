@@ -174,26 +174,23 @@ try :
         port = '/dev/ttyACM0'
         brate = 9600
         ser = serial.Serial(port, brate)
-        while True :
-            if request.method == 'POST' :
+        if request.method == 'POST' :
+            while True :
                 ch = request.form.get('name')
-                
                 if ch == 'stop' :
-                    ser.write(ch.encode('utf-8'))
+                    ser.write(ch.encode())
                 if ch == 'front' :
-                    ser.write(ch.encode('utf-8'))
+                    ser.write(ch.encode())
                 if ch == 'left' :
-                    ser.write(ch.encode('utf-8'))
+                    ser.write(ch.encode())
                 if ch == 'right' :
-                    ser.write(ch.encode('utf-8'))
+                    ser.write(ch.encode())
                 if ch == 'back' :
-                    ser.write(ch.encode('utf-8'))
+                    ser.write(ch.encode())
                 if ch == 'reset' :
-                    ser.write(ch.encode('utf-8'))
+                    ser.write(ch.encode())
                 if ch == 'Pos' :
-                    ser.write(ch.encode('utf-8'))
-                    
-        return render_template('test.html')
+                    ser.write(ch.encode())
 
     if __name__ == '__main__':
         app.run(host='0.0.0.0', threaded=True, debug=True)
