@@ -83,7 +83,7 @@ def gen_frame(cap):
                 pass
         else :
             pass
-'''
+
 def serial_start(ch) :
     port = '/dev/ttyACM0'
     brate = 9600
@@ -96,7 +96,7 @@ def serial_start(ch) :
             
         if cmd == 's' :
             ser.write(cmd.encode())  
-'''
+
 
 @app.route('/')
 def index():
