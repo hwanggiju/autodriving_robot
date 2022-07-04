@@ -91,11 +91,20 @@ def serial_start(ch) :
     
     while True :
         cmd = ch
-        if cmd == 'g' :
+        if cmd == 'stop' :
             ser.write(cmd.encode())
-            
-        if cmd == 's' :
+        if cmd == 'front' :
             ser.write(cmd.encode())  
+        if cmd == 'left' :
+            ser.write(cmd.encode()) 
+        if cmd == 'right' :
+            ser.write(cmd.encode()) 
+        if cmd == 'back' :
+            ser.write(cmd.encode()) 
+        if cmd == 'reset' :
+            ser.write(cmd.encode()) 
+        if cmd == 'Pos' :
+            ser.write(cmd.encode()) 
 
 
 @app.route('/')
