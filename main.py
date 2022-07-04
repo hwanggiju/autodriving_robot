@@ -95,7 +95,7 @@ try :
         ser = serial.Serial(port, brate, timeout=None)
         
         ser.write(ch.encode())
-        print(ser.write(ch.encode()))
+        print(ch)
         # senser_data = ser.readline()
         # print(senser_data.decode()[:len(senser_data)-2])
 
@@ -175,6 +175,7 @@ try :
     def gostop() :
         if request.method == 'POST' :
             ch = request.form.get('name')
+            print(ch)
             if ch == 'back' :
                 serial_trans(ch)
             if ch == 'front' :
