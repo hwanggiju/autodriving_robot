@@ -174,9 +174,8 @@ try :
         port = '/dev/ttyACM0'
         brate = 9600
         ser = serial.Serial(port, brate)
-        while True :
-            if request.method == 'POST' :
-                ch = request.form.get('name')
+        if request.method == 'POST' :
+            ch = request.form.get('name')
             if ch == 'stop' :
                 ser.write(ch.encode())
             if ch == 'front' :
