@@ -88,15 +88,15 @@ try :
             else :
                 pass
             
-    # 시리얼 동작 명령어 입력 값 디코딩 함수
+    # 시리얼 동작 명령어 입력 값 인코드 함수
     def serial_trans(ch) :
         port = '/dev/ttyACM0'
         brate = 9600
         ser = serial.Serial(port, brate, timeout=None)
         
         ser.write(ch.encode())
-        senser_data = ser.readline()
-        print(senser_data.decode()[:len(senser_data)-2])
+        # senser_data = ser.readline()
+        # print(senser_data.decode()[:len(senser_data)-2])
 
     # 웹 기본 화면 - 카메라 실시간 화면 표시
     @app.route('/')
