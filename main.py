@@ -16,9 +16,9 @@ import os
 
 try :
     global user, switch, name
-    user = 0 
-    switch = 1 
-    name = 'Unknown'
+    user = 0    # 사용자 얼굴 인식 확인
+    switch = 1  # 카메라 동작 on/off 확인 1 : on, 0 : off
+    name = 'Unknown'    # 사용자 일치 확인
 
     # 이미지 학습 전처리
     # C:/opencv/development/face/
@@ -44,6 +44,7 @@ try :
     # 어플리케이션 선언
     app = Flask(__name__, static_url_path='/static')
 
+    # 카메라 device 연결
     cap = cv2.VideoCapture(0)
 
     # 사용자 얼굴 감지 구현 함수
@@ -86,6 +87,16 @@ try :
                     pass
             else :
                 pass
+            
+    # 시리얼 동작 명령어 입력 값 디코딩 함수
+    def serial_trans(ch) :
+        port = '/dev/ttyACM0'
+        brate = 9600
+        ser = serial.Serial(port, brate, timeout=None)
+        
+        ser.write(ch.encode())
+        senser_data = ser.readline()
+        print(senser_data.decode()[:len(senser_data)-2])
 
     # 웹 기본 화면 - 카메라 실시간 화면 표시
     @app.route('/')
@@ -161,23 +172,25 @@ try :
     # stop, front, left, right, back, reset, Pos 명령어
     @app.route('/Control/requests1', methods=['POST'])
     def gostop() :
-        port = '/dev/ttyACM0'
-        brate = 9600
-        ser = serial.Serial(port, brate, timeout=None)
         
         if request.method == 'POST' :
             ch = request.form.get('name')
 
-            if ch == 'g' :
-                ser.write(ch.encode())
-                senser_data = ser.readline()
-                print(senser_data.decode()[:len(senser_data)-2])
+            if ch == 'back' :
+                serial_trans(ch)
+            if ch == 'front' :
+                serial_trans(ch)
+            if ch == 'left' :
+                serial_trans(ch)
+            if ch == 'right' :
+                serial_trans(ch)
+            if ch == 'back' :
+                serial_trans(ch)
+            if ch == 'reset' :
+                serial_trans(ch)
+            if ch == 'Pos' :
+                serial_trans(ch)
                 
-            if ch == 's' :
-                ser.write(ch.encode())
-                senser_data = ser.readline()
-                print(senser_data.decode()[:len(senser_data)-2])
-                        
         return render_template('test.html')
 
     if __name__ == '__main__':
