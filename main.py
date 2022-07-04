@@ -176,7 +176,7 @@ try :
         if request.method == 'POST' :
             ch = request.form.get('name')
             print(ch)
-            if ch == 'back' :
+            if ch == 'stop' :
                 serial_trans(ch)
             if ch == 'front' :
                 serial_trans(ch)
