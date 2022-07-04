@@ -91,6 +91,7 @@ try :
     # 시리얼 동작 명령어 입력 값 인코드 함수
     compare = 0
     def serial_trans(ch, temp) :
+        global compare
         port = '/dev/ttyACM0'
         brate = 9600
         ser = serial.Serial(port, brate, timeout=None)
