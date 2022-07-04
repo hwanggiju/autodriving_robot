@@ -94,7 +94,7 @@ try :
         brate = 9600
         ser = serial.Serial(port, brate, timeout=None)
         
-        test = ser.write(ch.encode())
+        test = ser.write(ch.encode('utf-8'))
         print(test)
         # senser_data = ser.readline()
         # print(senser_data.decode()[:len(senser_data)-2])
