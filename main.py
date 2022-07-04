@@ -92,9 +92,8 @@ try :
     def serial_trans(ch) :
         port = '/dev/ttyACM0'
         brate = 9600
-        ser = serial.Serial(port, brate, timeout=None)
-        while True :
-            ser.write(ch.encode('utf-8'))
+        ser = serial.Serial(port, brate)
+        ser.write(ch.encode('utf-8'))
         # senser_data = ser.readline()
         # print(senser_data.decode()[:len(senser_data)-2])
 
@@ -174,22 +173,24 @@ try :
     def gostop() :
         temp = 0
         if request.method == 'POST' :
-            ch = request.form.get('name')
-            if ch == 'stop' :
-                serial_trans(str(ch))
-            if ch == 'front' :
-                serial_trans(str(ch))
-            if ch == 'left' :
-                serial_trans(str(ch))
-            if ch == 'right' :
-                serial_trans(str(ch))
-            if ch == 'back' :
-                serial_trans(str(ch))
-            if ch == 'reset' :
-                serial_trans(str(ch))
-            if ch == 'Pos' :
-                serial_trans(str(ch))
+            while True :
+                ch = request.form.get('name')
                 
+                if ch == 'stop' :
+                    serial_trans(str(ch))
+                if ch == 'front' :
+                    serial_trans(str(ch))
+                if ch == 'left' :
+                    serial_trans(str(ch))
+                if ch == 'right' :
+                    serial_trans(str(ch))
+                if ch == 'back' :
+                    serial_trans(str(ch))
+                if ch == 'reset' :
+                    serial_trans(str(ch))
+                if ch == 'Pos' :
+                    serial_trans(str(ch))
+                    
         return render_template('test.html')
 
     if __name__ == '__main__':
