@@ -168,17 +168,17 @@ try :
         if request.method == 'POST' :
             if request.form.get('S') == 'stop' :
                 ser.write('S'.encode())
-            if request.form.get('F') == 'front' :
+            elif request.form.get('F') == 'front' :
                 ser.write('F'.encode())
-            if request.form.get('L') == 'left' :
+            elif request.form.get('L') == 'left' :
                 ser.write('L'.encode())
-            if request.form.get('R') == 'right' :
+            elif request.form.get('R') == 'right' :
                 ser.write('R'.encode())
-            if request.form.get('B') == 'back' :
+            elif request.form.get('B') == 'back' :
                 ser.write('B'.encode())
-            if request.form.get('r') == 'reset' :
+            elif request.form.get('r') == 'reset' :
                 ser.write('r'.encode())
-            if request.form.get('P') == 'Pos' :
+            elif request.form.get('P') == 'Pos' :
                 ser.write('P'.encode())
                 
         return render_template('test.html')
