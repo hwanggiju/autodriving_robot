@@ -172,8 +172,8 @@ try :
     @app.route('/Control/requests1', methods=['POST'])
     def gostop() :
         temp = 0
-        if request.method == 'POST' :
-            while True :
+        while True :
+            if request.method == 'POST' :
                 ch = request.form.get('name')
                 
                 if ch == 'stop' :
