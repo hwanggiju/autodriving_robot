@@ -89,13 +89,15 @@ try :
                 pass
             
     # 시리얼 동작 명령어 입력 값 인코드 함수
-    def serial_trans(ch) :
+    compare = 0
+    def serial_trans(ch, temp) :
         port = '/dev/ttyACM0'
         brate = 9600
         ser = serial.Serial(port, brate, timeout=None)
-        
-        test = ser.write(ch.encode('utf-8'))
-        print(test)
+        if temp != compare :
+            compare = temp
+            while True :
+                ser.write(ch.encode('utf-8'))
         # senser_data = ser.readline()
         # print(senser_data.decode()[:len(senser_data)-2])
 
@@ -173,23 +175,29 @@ try :
     # stop, front, left, right, back, reset, Pos 명령어
     @app.route('/Control/requests1', methods=['POST'])
     def gostop() :
+        temp = 0
         if request.method == 'POST' :
             ch = request.form.get('name')
-            print(ch)
             if ch == 'stop' :
-                serial_trans(ch)
+                serial_trans(ch, temp)
             if ch == 'front' :
-                serial_trans(ch)
+                temp = 1
+                serial_trans(ch, temp)
             if ch == 'left' :
-                serial_trans(ch)
+                temp = 2
+                serial_trans(ch, temp)
             if ch == 'right' :
-                serial_trans(ch)
+                temp = 3
+                serial_trans(ch, temp)
             if ch == 'back' :
-                serial_trans(ch)
+                temp = 4
+                serial_trans(ch, temp)
             if ch == 'reset' :
-                serial_trans(ch)
+                temp = 5
+                serial_trans(ch, temp)
             if ch == 'Pos' :
-                serial_trans(ch)
+                temp = 6
+                serial_trans(ch, temp)
                 
         return render_template('test.html')
 
