@@ -95,6 +95,7 @@ try :
         ser = serial.Serial(port, brate, timeout=None)
         
         ser.write(ch.encode())
+        print(ser.write(ch.encode()))
         # senser_data = ser.readline()
         # print(senser_data.decode()[:len(senser_data)-2])
 
@@ -172,10 +173,8 @@ try :
     # stop, front, left, right, back, reset, Pos 명령어
     @app.route('/Control/requests1', methods=['POST'])
     def gostop() :
-        
         if request.method == 'POST' :
             ch = request.form.get('name')
-
             if ch == 'back' :
                 serial_trans(ch)
             if ch == 'front' :
