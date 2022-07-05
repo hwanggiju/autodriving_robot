@@ -168,6 +168,7 @@ try :
         if request.method == 'POST' :
             if request.form.get('s') == 'stop' :
                 ch = 's'
+                print(type(ch))
                 ser.write(ch.encode())
             elif request.form.get('f') == 'front' :
                 ch = 'f'
