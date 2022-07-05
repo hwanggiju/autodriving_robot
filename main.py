@@ -168,7 +168,7 @@ try :
         ser = serial.Serial(port, brate)
         if request.method == 'POST' :
             data = ser.readline()
-            data = data.decode()[:len(data)-2]
+            data = data.decode(errors='ignore')[:len(data)-2]
             if request.form.get('s') == 'stop' :
                 ser.write('s'.encode())
             if request.form.get('f') == 'front' :
