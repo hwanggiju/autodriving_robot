@@ -167,12 +167,12 @@ try :
         ser = serial.Serial(port, brate)
         if request.method == 'POST' :
             if request.form.get('s') == 'stop' :
-                ser.write('s'.encode('utf-8'))
+                ser.write('s'.encode())
                 data = ser.readline()
                 data = data.decode()[:len(data)-2]
                 print(data)
             if request.form.get('f') == 'front' :
-                ser.write('f'.encode('utf-8'))
+                ser.write('f'.encode())
                 data = ser.readline()
                 data = data.decode()[:len(data)-2]
                 print(data)
@@ -186,6 +186,8 @@ try :
                 ser.write('R'.encode())
             if request.form.get('P') == 'Pos' :
                 ser.write('P'.encode())
+                
+            ser.write('\n'.encode())
         
         return render_template('test.html')
 
