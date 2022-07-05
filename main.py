@@ -1,3 +1,4 @@
+from codecs import backslashreplace_errors
 from glob import glob
 from multiprocessing.sharedctypes import Value
 from pickle import TRUE
@@ -180,7 +181,7 @@ try :
                 ser.write('R'.encode())
             if request.form.get('P') == 'Pos' :
                 ser.write('P'.encode())
-            ser.write('\n')
+            ser.write('\n'.encode(errors=backslashreplace_errors))
             data = ser.readline()
             data = data.decode()[:len(data)-2]
             print(data)
