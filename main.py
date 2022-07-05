@@ -160,11 +160,11 @@ try :
         
     # 모터 동작 명령 수행
     # stop, front, left, right, back, reset, Pos 명령어
+    port = '/dev/ttyACM0'
+    brate = 115200
+    ch = ''
     @app.route('/Control/requests1', methods=['POST'])
     def gostop() :
-        ch = ''
-        port = '/dev/ttyACM0'
-        brate = 115200
         ser = serial.Serial(port, brate)
         if request.method == 'POST' :
             if request.form.get('s') == 'stop' :
