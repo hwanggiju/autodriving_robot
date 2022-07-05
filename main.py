@@ -182,9 +182,11 @@ try :
             if request.form.get('P') == 'Pos' :
                 ser.write('P'.encode())
             ser.write('\n'.encode(encoding='ascii'))
+            '''
             data = ser.readline()
-            data = data.decode('utf-16')[:len(data)-2]
+            data = data.decode('utf-8')[:len(data)-2]
             print(data)
+            '''
         
         return render_template('test.html')
 
