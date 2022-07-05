@@ -170,13 +170,13 @@ try :
                 ch = 's'
                 ser.write(ch.encode())
                 data = ser.readline()
-                data = data.decode()[:len(data)-3]
+                data = data.decode()[:len(data)-2]
                 print(data)
             if request.form.get('f') == 'front' :
                 ch = 'f'
                 ser.write(ch.encode())
                 data = ser.readline()
-                data = data.decode()[:len(data)-3]
+                data = data.decode()[:len(data)-2]
                 print(data)
             if request.form.get('l') == 'left' :
                 ser.write('l'.encode())
