@@ -167,9 +167,11 @@ try :
         ser = serial.Serial(port, brate)
         if request.method == 'POST' :
             if request.form.get('s') == 'stop' :
-                ser.write('s'.encode('utf-8'))
+                ch = 's'
+                ser.write(ch.encode('utf-8'))
             elif request.form.get('f') == 'front' :
-                ser.write('f'.encode('utf-8'))
+                ch = 'f'
+                ser.write(ch.encode('utf-8'))
             elif request.form.get('l') == 'left' :
                 ser.write('l'.encode())
             elif request.form.get('r') == 'right' :
