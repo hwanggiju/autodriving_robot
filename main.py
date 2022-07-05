@@ -167,20 +167,22 @@ try :
         brate = 115200
         ser = serial.Serial(port, brate)
         if request.method == 'POST' :
-            if request.form.get('S') == 'stop' :
-                ch = request.form.get('S')
-                print(ch)
-                ser.write('S'.encode())
-            elif request.form.get('F') == 'front' :
-                ser.write('F'.encode())
-            elif request.form.get('L') == 'left' :
-                ser.write('L'.encode())
-            elif request.form.get('R') == 'right' :
-                ser.write('R'.encode())
-            elif request.form.get('B') == 'back' :
-                ser.write('B'.encode())
-            elif request.form.get('r') == 'reset' :
+            if request.form.get('s') == 'stop' :
+                ch = request.form.get('s')
+                print(ch[0])
+                ser.write(ch[0].encode())
+            elif request.form.get('f') == 'front' :
+                ch = request.form.get('f')
+                print(ch[0])
+                ser.write(ch[0].encode())
+            elif request.form.get('l') == 'left' :
+                ser.write('l'.encode())
+            elif request.form.get('r') == 'right' :
                 ser.write('r'.encode())
+            elif request.form.get('b') == 'back' :
+                ser.write('b'.encode())
+            elif request.form.get('R') == 'Reset' :
+                ser.write('R'.encode())
             elif request.form.get('P') == 'Pos' :
                 ser.write('P'.encode())
                 
