@@ -165,13 +165,19 @@ try :
     @app.route('/requests1', methods=['POST'])
     def gostop() :
         ser = serial.Serial(port, brate)
+        data = ''
         if request.method == 'POST' :
             if request.form.get('s') == 'stop' :
                 ch = 's'
-                print(type(ch))
+                data = ser.readline()
+                data = data.decode()[:len(data)-3]
+                print(data)
                 ser.write(ch.encode())
             if request.form.get('f') == 'front' :
                 ch = 'f'
+                data = ser.readline()
+                data = data.decode()[:len(data)-3]
+                print(data)
                 ser.write(ch.encode())
             if request.form.get('l') == 'left' :
                 ser.write('l'.encode())
