@@ -6,10 +6,9 @@ brate = 9600
 ser = serial.Serial(port, brate, timeout=None)
 while True :
     ch = input()
-    ch = int(ch)
-    if ch == 1 :
+    if ch == 's' :
         print(type(ch))
         ser.write(ch.encode())
         
-    if ch == 2 :
+    if ch == 'f' :
         ser.write(ch.encode())  
