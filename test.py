@@ -10,10 +10,12 @@ while True :
         ser.write(ch.encode())
         data = ser.readline()
         data = data.decode()[:len(data)]
+        print(len(data))
         print(data)
         
     if ch == 'f' :
         ser.write(ch.encode())  
         data = ser.readline()
         data = data.decode()[:len(data)]
+        print(len(data))
         print(data)
