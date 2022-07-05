@@ -9,13 +9,13 @@ while True :
     if ch == 's' :
         ser.write(ch.encode())
         data = ser.readline()
-        data = data.decode()[:len(data)]
+        data = data.decode()[:len(data)-2]
         print(len(data))
         print(data)
         
     if ch == 'f' :
         ser.write(ch.encode())  
         data = ser.readline()
-        data = data.decode()[:len(data)]
+        data = data.decode()[:len(data)-2]
         print(len(data))
         print(data)
