@@ -165,7 +165,6 @@ try :
     @app.route('/requests1', methods=['POST'])
     def gostop() :
         ser = serial.Serial(port, brate)
-        data = ''
         if request.method == 'POST' :
             if request.form.get('s') == 'stop' :
                 ch = 's'
