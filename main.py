@@ -170,20 +170,20 @@ try :
                 ch = 's'
                 print(type(ch))
                 ser.write(ch.encode())
-            elif request.form.get('f') == 'front' :
+            if request.form.get('f') == 'front' :
                 ch = 'f'
                 ser.write(ch.encode())
-            elif request.form.get('l') == 'left' :
+            if request.form.get('l') == 'left' :
                 ser.write('l'.encode())
-            elif request.form.get('r') == 'right' :
+            if request.form.get('r') == 'right' :
                 ser.write('r'.encode())
-            elif request.form.get('b') == 'back' :
+            if request.form.get('b') == 'back' :
                 ser.write('b'.encode())
-            elif request.form.get('R') == 'Reset' :
+            if request.form.get('R') == 'Reset' :
                 ser.write('R'.encode())
-            elif request.form.get('P') == 'Pos' :
+            if request.form.get('P') == 'Pos' :
                 ser.write('P'.encode())
-                
+        
         return render_template('test.html')
 
     if __name__ == '__main__':
