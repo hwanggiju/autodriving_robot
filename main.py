@@ -167,7 +167,7 @@ try :
         ser = serial.Serial(port, brate)
         if request.method == 'POST' :
             if request.form.get('s') == 'stop' :
-                ch = 's'
+                ch = 's\n'
                 ser.write(ch.encode())
                 data = ser.readline()
                 data = data.decode()[:len(data)-2]
