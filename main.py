@@ -162,11 +162,14 @@ try :
     # stop, front, left, right, back, reset, Pos 명령어
     @app.route('/Control/requests1', methods=['POST'])
     def gostop() :
+        ch = ''
         port = '/dev/ttyACM0'
         brate = 115200
         ser = serial.Serial(port, brate)
         if request.method == 'POST' :
             if request.form.get('S') == 'stop' :
+                ch = request.form.get('S')
+                print(ch)
                 ser.write('S'.encode())
             elif request.form.get('F') == 'front' :
                 ser.write('F'.encode())
