@@ -19,6 +19,8 @@ try :
     user = 0    # 사용자 얼굴 인식 확인
     switch = 1  # 카메라 동작 on/off 확인 1 : on, 0 : off
     name = 'Unknown'    # 사용자 일치 확인
+    port = '/dev/ttyACM0'   # 아두이노 시리얼 통신 포트
+    brate = 115200          # 아두이노 시리얼 통신 brate
 
     # 이미지 학습 전처리
     # C:/opencv/development/face/
@@ -160,9 +162,6 @@ try :
         
     # 모터 동작 명령 수행
     # stop, front, left, right, back, reset, Pos 명령어
-    port = '/dev/ttyACM0'
-    brate = 115200
-    ch = ''
     @app.route('/Control/requests1', methods=['POST'])
     def gostop() :
         ser = serial.Serial(port, brate)
