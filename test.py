@@ -7,8 +7,13 @@ ser = serial.Serial(port, brate, timeout=None)
 while True :
     ch = input()
     if ch == 's' :
-        print(type(ch))
         ser.write(ch.encode())
+        data = ser.readline()
+        data = data.decode()[:len(data)-3]
+        print(data)
         
     if ch == 'f' :
         ser.write(ch.encode())  
+        data = ser.readline()
+        data = data.decode()[:len(data)-3]
+        print(data)
