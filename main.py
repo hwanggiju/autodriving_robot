@@ -181,7 +181,7 @@ try :
                 ser.write('R'.encode())
             if request.form.get('P') == 'Pos' :
                 ser.write('P'.encode())
-            ser.write('\n'.encode(encoding='ascii'))
+            ser.write('\n'.encode())
             '''
             data = ser.readline()
             data = data.decode('utf-8')[:len(data)-2]
