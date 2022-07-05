@@ -167,6 +167,8 @@ try :
     def gostop() :
         ser = serial.Serial(port, brate)
         if request.method == 'POST' :
+            data = ser.readline()
+            data = data.decode()[:len(data)-3]
             if request.form.get('s') == 'stop' :
                 ser.write('s'.encode())
             if request.form.get('f') == 'front' :
@@ -181,8 +183,6 @@ try :
                 ser.write('R'.encode())
             if request.form.get('P') == 'Pos' :
                 ser.write('P'.encode())
-            data = ser.readline()
-            data = data.decode()[:len(data)-2]
         
         return render_template('test.html')
 
