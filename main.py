@@ -162,16 +162,16 @@ try :
         
     # 모터 동작 명령 수행
     # stop, front, left, right, back, reset, Pos 명령어
-    @app.route('/Control/requests1', methods=['POST'])
+    @app.route('/requests1', methods=['POST'])
     def gostop() :
         ser = serial.Serial(port, brate)
         if request.method == 'POST' :
             if request.form.get('s') == 'stop' :
                 ch = 's'
-                ser.write(ch.encode('utf-8'))
+                ser.write(ch.encode())
             elif request.form.get('f') == 'front' :
                 ch = 'f'
-                ser.write(ch.encode('utf-8'))
+                ser.write(ch.encode())
             elif request.form.get('l') == 'left' :
                 ser.write('l'.encode())
             elif request.form.get('r') == 'right' :
