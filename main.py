@@ -166,9 +166,9 @@ try :
     @app.route('/requests1', methods=['POST'])
     def gostop() :
         ser = serial.Serial(port, brate)
+        data = ser.readline()
+        data = data.decode(errors='ignore')[:len(data)-2]
         if request.method == 'POST' :
-            data = ser.readline()
-            data = data.decode(errors='ignore')[:len(data)-2]
             if request.form.get('s') == 'stop' :
                 ser.write('s'.encode())
             if request.form.get('f') == 'front' :
