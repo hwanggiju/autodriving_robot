@@ -165,26 +165,29 @@ try :
     # stop, front, left, right, back, reset, Pos 명령어
     @app.route('/requests1', methods=['POST'])
     def gostop() :
-        ser = serial.Serial(port, brate)
-        data = ser.readline()
-        data = data.decode(errors='ignore')[:len(data)-2]
-        if request.method == 'POST' :
-            if request.form.get('s') == 'stop' :
-                ser.write('s'.encode())
-            if request.form.get('f') == 'front' :
-                ser.write('f'.encode())
-            if request.form.get('l') == 'left' :
-                ser.write('l'.encode())
-            if request.form.get('r') == 'right' :
-                ser.write('r'.encode())
-            if request.form.get('b') == 'back' :
-                ser.write('b'.encode())
-            if request.form.get('R') == 'Reset' :
-                ser.write('R'.encode())
-            if request.form.get('P') == 'Pos' :
-                ser.write('P'.encode())
-        
-        return render_template('test.html')
+        try:
+            ser = serial.Serial(port, brate)
+            data = ser.readline()
+            data = data.decode(errors='ignore')[:len(data)-2]
+            if request.method == 'POST' :
+                if request.form.get('s') == 'stop' :
+                    ser.write('s'.encode())
+                if request.form.get('f') == 'front' :
+                    ser.write('f'.encode())
+                if request.form.get('l') == 'left' :
+                    ser.write('l'.encode())
+                if request.form.get('r') == 'right' :
+                    ser.write('r'.encode())
+                if request.form.get('b') == 'back' :
+                    ser.write('b'.encode())
+                if request.form.get('R') == 'Reset' :
+                    ser.write('R'.encode())
+                if request.form.get('P') == 'Pos' :
+                    ser.write('P'.encode())
+            
+            return render_template('test.html')
+        except serial.serialutil.SerialException:
+            pass
 
     if __name__ == '__main__':
         app.run(host='0.0.0.0', threaded=True, debug=True)
