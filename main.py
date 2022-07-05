@@ -169,16 +169,16 @@ try :
         if request.method == 'POST' :
             if request.form.get('s') == 'stop' :
                 ch = 's'
+                ser.write(ch.encode())
                 data = ser.readline()
                 data = data.decode()[:len(data)-3]
                 print(data)
-                ser.write(ch.encode())
             if request.form.get('f') == 'front' :
                 ch = 'f'
+                ser.write(ch.encode())
                 data = ser.readline()
                 data = data.decode()[:len(data)-3]
                 print(data)
-                ser.write(ch.encode())
             if request.form.get('l') == 'left' :
                 ser.write('l'.encode())
             if request.form.get('r') == 'right' :
