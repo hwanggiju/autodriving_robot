@@ -185,7 +185,6 @@ try :
                 if request.form.get('P') == 'Pos' :
                     ser.write('P'.encode())
             
-            return render_template('test.html')
         except serial.serialutil.SerialException:
             return render_template('test.html')
 
