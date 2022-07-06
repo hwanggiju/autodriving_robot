@@ -168,9 +168,9 @@ try :
     def gostop() :
         try:
             ser = serial.Serial(port, brate)
-            data = ser.readline()
-            data = data.decode(errors='ignore')[:len(data)-2]
-            print(data)
+            # data = ser.readline()
+            # data = data.decode(errors='ignore')[:len(data)-2]
+            # print(data)
             direction = ''
             if request.method == 'POST' :
                 if request.form.get('s') == 'stop' :
