@@ -130,7 +130,7 @@ void doEncoderD() {
 }
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   pinMode(encoderPinA, INPUT_PULLUP);
   attachInterrupt(0, doEncoderA, CHANGE);

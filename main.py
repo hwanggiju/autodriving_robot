@@ -22,10 +22,10 @@ try :
     switch = 1  # 카메라 동작 on/off 확인 1 : on, 0 : off
     name = 'Unknown'    # 사용자 일치 확인
     port = '/dev/ttyACM0'   # 아두이노 시리얼 통신 포트
-    brate = 9600          # 아두이노 시리얼 통신 brate
+    brate = 115200          # 아두이노 시리얼 통신 brate
 
     # 이미지 학습 전처리
-    # C:/opencv/development/face/
+    # C:/opencv/development/face/ - 윈도우 환경 테스트 작업 시 복붙 용
     obama_image = face_recognition.load_image_file("image_dir/obama.jpg")
     obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
 
@@ -75,7 +75,6 @@ try :
     # 카메라 frame 읽어오고 웹에서 표현하는 형식으로 인코딩해주는 함수
     def gen_frame(cap):
         global user
-        
         while True:
             success, frame = cap.read()
             if success:
@@ -128,8 +127,6 @@ try :
         senser_data = ser.readline()
         senser_data = float(data.decode()[:len(data)-3])
         '''
-        port = '/dev/ttyACM0'
-        brate = 9600
         ser = serial.Serial(port, brate, timeout=None)
         SerialData = ser.readline()
         SerialData = SerialData.decode(errors='ignore')[:len(SerialData)-2]
