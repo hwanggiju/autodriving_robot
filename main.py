@@ -1,3 +1,4 @@
+from base64 import encode
 from codecs import backslashreplace_errors
 from glob import glob
 from multiprocessing.sharedctypes import Value
@@ -169,22 +170,30 @@ try :
             ser = serial.Serial(port, brate)
             data = ser.readline()
             data = data.decode(errors='ignore')[:len(data)-2]
+            direction = ''
             if request.method == 'POST' :
                 if request.form.get('s') == 'stop' :
+                    direction = 'STOP'
                     ser.write('s'.encode())
                 if request.form.get('f') == 'front' :
+                    direction = '전진'
                     ser.write('f'.encode())
                 if request.form.get('l') == 'left' :
+                    direction = '좌회전'
                     ser.write('l'.encode())
                 if request.form.get('r') == 'right' :
+                    direction = '우회전'
                     ser.write('r'.encode())
                 if request.form.get('b') == 'back' :
+                    direction = '후진'
                     ser.write('b'.encode())
                 if request.form.get('R') == 'Reset' :
+                    direction = '초기화'
                     ser.write('R'.encode())
                 if request.form.get('P') == 'Pos' :
+                    direction = '위치 저장'
                     ser.write('P'.encode())
-            return True
+            return render_template('test.html', value=direction, encode='utf-8')
         except serial.serialutil.SerialException:
             return render_template('test.html')
 

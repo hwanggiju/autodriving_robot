@@ -32,6 +32,7 @@
     <div class='container-fluid'>
         <div class='row'>
           <form method = 'POST', action="{{url_for('gostop')}}">
+            <div class='print'> 진행 상태 : {{value}}  </div>
             <input type="submit" value="stop" name='s' /></br></br>
             <input type="submit" value="front" name="f" /></br></br>
             <input type="submit" value="left" name="l" /></br></br>
