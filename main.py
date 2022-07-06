@@ -128,6 +128,13 @@ try :
         senser_data = ser.readline()
         senser_data = float(data.decode()[:len(data)-3])
         '''
+        port = '/dev/ttyACM0'
+        brate = 9600
+        ser = serial.Serial(port, brate, timeout=None)
+        SerialData = ser.readline()
+        SerialData = SerialData.decode(errors='ignore')[:len(SerialData)-2]
+        print(SerialData)
+
         data = [time() * 1000, random() * 100]
         response = make_response(json.dumps(data))
         response.content_type = 'application/json'
@@ -168,9 +175,8 @@ try :
     def gostop() :
         try:
             ser = serial.Serial(port, brate)
-            # data = ser.readline()
-            # data = data.decode(errors='ignore')[:len(data)-2]
-            # print(data)
+            data = ser.readline()
+            data = data.decode(errors='ignore')[:len(data)-2]
             direction = ''
             if request.method == 'POST' :
                 if request.form.get('s') == 'stop' :
@@ -195,6 +201,8 @@ try :
                     direction = '위치 저장'
                     ser.write('P'.encode())
             return render_template('test.html', value=direction, encode='utf-8')
+        
+        # 시리얼 오류 예외 처리 -> 동작에 영향 x, 무시 가능한 오류
         except serial.serialutil.SerialException:
             return render_template('test.html')
 
