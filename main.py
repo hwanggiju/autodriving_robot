@@ -184,7 +184,7 @@ try :
                     ser.write('R'.encode())
                 if request.form.get('P') == 'Pos' :
                     ser.write('P'.encode())
-            
+            return response
         except serial.serialutil.SerialException:
             return render_template('test.html')
 
