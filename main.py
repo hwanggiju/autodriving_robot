@@ -22,7 +22,7 @@ try :
     switch = 1  # 카메라 동작 on/off 확인 1 : on, 0 : off
     name = 'Unknown'    # 사용자 일치 확인
     port = '/dev/ttyACM0'   # 아두이노 시리얼 통신 포트
-    brate = 115200          # 아두이노 시리얼 통신 brate
+    brate = 9600            # 아두이노 시리얼 통신 brate
 
     # 이미지 학습 전처리
     # C:/opencv/development/face/ - 윈도우 환경 테스트 작업 시 복붙 용

@@ -15,7 +15,7 @@
 
 #define gear                0.2
 #define volume              0.2
-#define diameter            12
+#define diameter            12      // 무슨 값인지
 #define pulse               7238
 
 const float right_error     =   0;
@@ -31,6 +31,7 @@ int unitScale = 5;
 
 bool testMode = false;
 
+// 모터 드라이버 핀 번호
 int driverPwmL  = 6;
 int driverIn1   = 7;
 int driverIn2   = 8;
@@ -130,7 +131,7 @@ void doEncoderD() {
 }
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
 
   pinMode(encoderPinA, INPUT_PULLUP);
   attachInterrupt(0, doEncoderA, CHANGE);
