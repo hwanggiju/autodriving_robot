@@ -179,25 +179,25 @@ try :
             if request.method == 'POST' :
                 if request.form.get('s') == 'stop' :
                     direction = 'STOP'
-                    ser.write('s'.encode())
+                    ser.write('stop'.encode())
                 if request.form.get('f') == 'front' :
                     direction = '전진'
-                    ser.write('f'.encode())
+                    ser.write('front'.encode())
                 if request.form.get('l') == 'left' :
                     direction = '좌회전'
-                    ser.write('l'.encode())
+                    ser.write('left'.encode())
                 if request.form.get('r') == 'right' :
                     direction = '우회전'
-                    ser.write('r'.encode())
+                    ser.write('right'.encode())
                 if request.form.get('b') == 'back' :
                     direction = '후진'
-                    ser.write('b'.encode())
+                    ser.write('back'.encode())
                 if request.form.get('R') == 'Reset' :
                     direction = '초기화'
-                    ser.write('R'.encode())
+                    ser.write('reset'.encode())
                 if request.form.get('P') == 'Pos' :
                     direction = '위치 저장'
-                    ser.write('P'.encode())
+                    ser.write('Pos'.encode())
             return render_template('test.html', value=direction, encode='utf-8')
         
         # 시리얼 오류 예외 처리 -> 동작에 영향 x, 무시 가능한 오류
