@@ -7,16 +7,17 @@
 
 #define led                 13
 
-#define wheel_radius        6 //반지름
-#define robot_wheel_pitch   40 //로봇 바퀴 간격
-#define encoder_PPR         26
-#define Gear_ratio          139
+#define wheel_radius        6       // 반지름
+#define robot_wheel_pitch   40      // 로봇 바퀴 간격
+#define encoder_PPR         26      // encoder PPR 한 바퀴에 한 채널에서 26개의 펄스 발생
+#define Gear_ratio          139     // 모터 한바퀴 돌때 엔코더 139바퀴 회전
 #define Quadrature          2
 
-#define gear                0.2
-#define volume              0.2
-#define diameter            12      // 무슨 값인지
-#define pulse               7238
+#define gear                0.2     
+#define volume              0.2     
+#define diameter            12      // 바퀴 지름
+// 모터 1바퀴 당 엔코더 회전 139바퀴 한 채널에 발생되는 펄스 3614 개
+#define pulse               7228    // Gear_ratio * encoder PPR
 
 const float right_error     =   0;
 const float left_error      =   0;
