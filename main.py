@@ -130,7 +130,7 @@ try :
         '''
         ser = serial.Serial(port, brate, timeout=None)
         SerialData = ser.readline()
-        SerialData = SerialData.decode(errors='ignore')[:len(SerialData)-2]
+        SerialData = SerialData.decode(errors='ignore')[:len(SerialData)]
         print(SerialData)
 
         data = [time() * 1000, random() * 100]
