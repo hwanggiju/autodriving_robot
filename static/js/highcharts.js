@@ -25,7 +25,7 @@ $(document).ready(function() {
             }
         },
         title: {
-            text: 'Live random data'
+            text: 'Live Motor data'
         },
         xAxis: {
             type: 'datetime',
@@ -41,7 +41,7 @@ $(document).ready(function() {
             }
         },
         series: [{
-            name: 'Random data',
+            name: 'Motor data',
             data: []
         }]
     });
