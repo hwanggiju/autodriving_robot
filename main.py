@@ -199,11 +199,11 @@ try :
                 if request.form.get('P') == 'Pos' :
                     direction = '위치 저장'
                     ser.write('Pos'.encode())
-            return render_template('test.html', value=direction, encode='utf-8')
+            return render_template('index.html', value=direction, encode='utf-8')
         
         # 시리얼 오류 예외 처리 -> 동작에 영향 x, 무시 가능한 오류
         except serial.serialutil.SerialException:
-            return render_template('test.html')
+            return render_template('index.html')
 
     if __name__ == '__main__':
         app.run(host='0.0.0.0', threaded=True, debug=True)
