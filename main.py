@@ -113,11 +113,6 @@ try :
         
         return render_template('map.html', string_lst = item_lst)
 
-    # 명령 입력 화면 - 현재 미완성 작성중
-    @app.route("/Control")
-    def control() :
-        return render_template('test.html')
-
     # 데이터 그래프 실시간으로 그려주는 동적 함수 - 자바 코드와 연동됨
     @app.route('/live-data')
     def live_data():
