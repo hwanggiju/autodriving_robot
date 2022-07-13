@@ -1,4 +1,7 @@
-#include <math.h>
+// 모터 사이즈/엔코더/감속비
+// 28파이/2채널 6펄스/ 1/139
+// 모터는 한바퀴당 44펄스인데, 감속기를 통하면 모터가 139바퀴를 더 돌아야 1바퀴이므로 감속기를 통한 최종 출력은 1바퀴에 6116펄스이며,
+// 각도로 치면 1펄스에 0.059도까지 감지 가능
 
 #define encoderPinA         2
 #define encoderPinB         3
@@ -7,69 +10,30 @@
 
 #define led                 13
 
-#define wheel_radius        6       // 반지름
-#define robot_wheel_pitch   40      // 로봇 바퀴 간격
-#define encoder_PPR         26      // encoder PPR 한 바퀴에 한 채널에서 26개의 펄스 발생
-#define Gear_ratio          139     // 모터 한바퀴 돌때 엔코더 139바퀴 회전
-#define Quadrature          2
+#define Gear_ratio          139   // 감속비
+#define encoderPPR          6     // 2채널 6펄스
+#define MotorRPM            44    // 모터 한바퀴 펄스
 
-#define gear                0.2     
-#define volume              0.2     
-#define diameter            12      // 바퀴 지름
-// 모터 1바퀴 당 엔코더 회전 139바퀴 한 채널에 발생되는 펄스 3614 개
-#define pulse               7228    // Gear_ratio * encoder PPR
+const float ratio = 360. / 139. / 6.;    // 1펄스 각도
 
-const float right_error     =   0;
-const float left_error      =   0;
-const float one_angle       =   2.73 * 41; //바퀴가 한바퀴 돌 때(양 쪽 모터 방향 반대) 각도
+char SerialData[256] = "";        // 시리얼 입력값
 
-long nowTime = millis();
-long preTime = nowTime;
+// P control
+float Kp = 30;
+float targetDeg = 360;  // 목표값
 
-char SerialData[1];
-
-int unitScale = 5;
-
-bool testMode = false;
-
-// 모터 드라이버 핀 번호
-int driverPwmL  = 6;
+int driverPwmL  = 6;    // 왼쪽 enable PWM
 int driverIn1   = 7;
 int driverIn2   = 8;
 int driverIn3   = 9;
 int driverIn4   = 10;
-int driverPwmR  = 11;
+int driverPwmR  = 11;   // 오른쪽 enable PWM
 
-int a, b, c, d;
 
-float speedL = 100, speedR = 100; //바퀴 속도
+float speedL = 100, speedR = 100; // 바퀴 속도
 
-long encoderPosL = 0;
-long encoderPosR = 0;
-
-float newpositionX, newpositionY;
-
-float vel_robot, d_robot;
-float dot_seta;
-float robot_seta = PI / 2;
-float robot_X = 0, robot_Y = 0, robot_R = 0;
-float robot_seta_radian = 0, origin_setha;
-
-float del_t = 0;
-float newposition1, newposition1_old, vel_motor1;
-float newposition2, newposition2_old, vel_motor2;
-
-float calcultor(float newposition1, float newposition2, float del_t);
-
-float angleCalculator(float newpositionX, float newpositionY);
-
-float distanceCalculator(float newpositionX, float newpositionY);
-
-float x = 0, y = 0, z = 0, originL = 0, originR = 0, setha = 0, disL = 0, disR = 0, angleL = 0, angleR = 0, distance = 0;
-
-float sumx = 0; // 총 x의 값
-float sumy = 0; // 총 y의 값
-float sumz = 0; // 총 z의 값
+long encoderPosL = 0;   // 왼쪽 엔코더 시작위치
+long encoderPosR = 0;   // 오른쪽 엔코더 시작위치
 
 void boardInitial() {
   pinMode(driverPwmL, OUTPUT);
@@ -132,7 +96,7 @@ void doEncoderD() {
 }
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   pinMode(encoderPinA, INPUT_PULLUP);
   attachInterrupt(0, doEncoderA, CHANGE);
@@ -145,118 +109,80 @@ void setup() {
 
   pinMode(encoderPinD, INPUT_PULLUP);
   attachInterrupt(5, doEncoderD, CHANGE);
-
 }
 
-long oldPositionL = -9999999999;
-long oldPositionR = -9999999999;
-
 void loop() {
-  nowTime = millis();
-
-  newposition1 = encoderPosL;
-  newposition2 = encoderPosR;
-
-  calculator(newposition1, newposition2);
-
+  float motorDegL = float(encoderPosL) * ratio;   // 현재 왼쪽 모터 각도
+  float motorDegR = float(encoderPosR) * ratio;   // 현재 오른쪽 모터 각도
+  float errorL = targetDeg - motorDegL;           // 목표각도와 현재 각도의 오차
+  float errorR = targetDeg - motorDegR;
+  float controlL = Kp * errorL;
+  float controlR = Kp * errorR;
 
   if (Serial.available()) {
-    SerialData[0] = Serial.read();  // 시리얼 값 저장
-    if (SerialData[0] == 's') {  // stop
+    int i = 0;
+    while (Serial.available()) {
+      SerialData[i] = Serial.read();
+      delay(1);
+      i++;
+    }
+    if (strcmp(SerialData, "stop") == 0) {
       digitalWrite(led, LOW);
       driverSet(speedL, 0, 0, 0, 0, speedR);
-      Serial.print("OK");
     }
-    else if (SerialData[0] == 'f') { // front
+    else if (strcmp(SerialData, "front") == 0) {
       digitalWrite(led, HIGH);
       driverSet(speedL, 1, 0, 1, 0, speedR);
-      Serial.print("OK");
     }
-    else if (SerialData[0] == 'l') { // left
+    else if (strcmp(SerialData, "left") == 0) {
       driverSet(speedL / 2, 0, 1, 1, 0, speedR / 2);
-      Serial.print("OK");
     }
-    else if (SerialData[0] == 'r') { // right
+    else if (strcmp(SerialData, "right") == 0) {
       driverSet(speedL / 2, 1, 0, 0, 1, speedR / 2);
-      Serial.print("OK");
     }
-    else if (SerialData[0] == 'b') { // back
+    else if (strcmp(SerialData, "back") == 0) {
       driverSet(speedL, 0, 1, 0, 1, speedR);
-      Serial.print("OK");
     }
-    else if (SerialData[0] == 'R') { // reset
+    /*
+      else if (strcmp(SerialData, "reset") == 0) {
       driverSet(speedL, 0, 0, 0, 0, speedR);
       robot_R = 0;
       robot_X = 0;
       robot_Y = 0;
       Serial.print("OK");
-    }
-    else if (SerialData[0] == 'P') { // Pos
+      }
+
+      else if (strcmp(SerialData, "Pos") == 0) {
       Serial.print("Pos/");
       Serial.print(int(robot_X / unitScale));
       Serial.print("/");
       Serial.print(int(robot_Y / unitScale));
       Serial.print("/");
       Serial.print(float(robot_R));
-    }
-    else {
-      if (testMode) {
-        //Serial.println("OK");
       }
-    }
-
-    //for (int j = 0; j < 256; j++)
-    //  SerialData[j] = '\0';
+    */
+    Serial.print("encoderPosL : ");
+    Serial.print(encoderPosL);
+    Serial.print("  encoderPosR : ");
+    Serial.println(encoderPosR);
+    Serial.print("motorDegL : ");
+    Serial.print(float(encoderPosL)*ratio);
+    Serial.print("  motorDegR : ");
+    Serial.println(float(encoderPosR)*ratio);
+    Serial.print("errorL : ");
+    Serial.print(errorL);
+    Serial.print("  errorR : ");
+    Serial.println(errorR);
+    Serial.print("controlL : ");
+    Serial.print(controlL);
+    Serial.print("  controlR : ");
+    Serial.println(controlR);
+    Serial.print("motorVelL : ");
+    Serial.print(min(abs(controlL), 255));
+    Serial.print("    motorVelR : ");
+    Serial.println(min(abs(controlR), 255));
+    Serial.println();
+    for (int j = 0; j < 256; j++)
+      SerialData[j] = '\0';
   }
-
-
-}
-
-
-float angleCalculator(float newpositionX, float newpositionY) {
-  if (newpositionX >= 0 && newpositionY >= 0)
-    return (-atan(newpositionX / newpositionY)) * 180 / PI;
-  else if (newpositionX >= 0 && newpositionY < 0)
-    return (-PI / 2 - atan(-newpositionY / newpositionX)) * 180 / PI;
-  else if (newpositionX < 0 && newpositionY < 0)
-    return (PI / 2 + atan(newpositionY / newpositionX)) * 180 / PI;
-  else if (newpositionX < 0 && newpositionY >= 0)
-    return (atan(-newpositionX / newpositionY)) * 180 / PI;
-  else
-    return 0;
-}
-
-float distanceCalculator(float newpositionX, float newpositionY) {
-  return sqrt(pow(newpositionX, 2) + pow(newpositionY, 2));
-}
-
-float calculator(float newposition1, float newposition2) {
-  double distanceL = diameter * M_PI / pulse * (newposition1 - newposition1_old);
-  double distanceR = diameter * M_PI / pulse * (newposition2 - newposition2_old);
-
-  newposition1_old = newposition1;
-  newposition2_old = newposition2;
-  //이동각도 계산
-  double c = (distanceL - distanceR) / 2;
-  //double angle = asin(2*sin(c/robot_wheel_pitch)*cos(c/robot_wheel_pitch))*(PI/180);
-  double angle = 2 * asin(c / robot_wheel_pitch) * (180.0 / M_PI);
-  Serial.print(distanceL);
-  Serial.print(distanceR);
-  //x, y 계산
-  robot_X += sin(((angle / 2 + robot_R)) * (M_PI / 180.0)) * (distanceL + distanceR) / 2;
-  robot_Y += cos(((angle / 2 + robot_R)) * (M_PI / 180.0)) * (distanceL + distanceR) / 2;
-  robot_R += angle;
-  if (robot_R > 180)
-    robot_R = robot_R - 360;
-  else if (robot_R < -180)
-    robot_R = robot_R + 360;
-
-  Serial.print("\t\tX: ");
-  Serial.print(robot_X);
-  Serial.print("\t\tY: ");
-  Serial.print(robot_Y);
-  Serial.print("\t\tR: ");
-  Serial.print(robot_R);
-  Serial.println();
-  delay(100);
 }
