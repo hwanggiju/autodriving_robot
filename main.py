@@ -126,8 +126,8 @@ try :
         ser = serial.Serial(port, brate, timeout=None)
         SerialData = ser.readline()
         # [:len(SerialData)]
-        SerialData = SerialData.decode(errors='ignore')[:4]
-        SerialData = int(SerialData)
+        SerialData = SerialData.decode(errors='ignore')[:4] # 데이터 슬라이싱
+        SerialData = float(SerialData)    # 
         print(SerialData)
 
         data = [time() * 1000, SerialData] # random() * 100 
