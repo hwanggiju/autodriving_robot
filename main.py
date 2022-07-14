@@ -125,10 +125,12 @@ try :
         '''
         ser = serial.Serial(port, brate, timeout=None)
         SerialData = ser.readline()
-        SerialData = SerialData.decode(errors='ignore')[:len(SerialData)]
+        # [:len(SerialData)]
+        SerialData = SerialData.decode(errors='ignore')[:4]
+        SerialData = int(SerialData)
         print(SerialData)
 
-        data = [time() * 1000, random() * 100]
+        data = [time() * 1000, SerialData] # random() * 100 
         response = make_response(json.dumps(data))
         response.content_type = 'application/json'
         return response
