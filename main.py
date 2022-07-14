@@ -127,10 +127,10 @@ try :
         SerialData = ser.readline()
         # [:len(SerialData)]
         SerialData = SerialData.decode(errors='ignore')[:4] # 데이터 슬라이싱
-        SerialData = float(SerialData)    # 
+        SerialData = SerialData    # 
         print(SerialData)
 
-        data = [time() * 1000, SerialData] # random() * 100 
+        data = [time() * 1000,  random() * 100 ] # random() * 100 
         response = make_response(json.dumps(data))
         response.content_type = 'application/json'
         return response
