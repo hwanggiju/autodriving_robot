@@ -29,11 +29,73 @@
 
     <div class="container-fluid">
       <div class="row">
+        <canvas id='myCanvas' width="2000" height="2000" style="border:1px solid #d3d3d3;"></canvas>
         <script language = 'JavaScript'>
           var string_lst = {{string_lst|tojson}};
+          var c = document.getElementByID("myCanvas");
+          var ctx = c.getContext("2d");
+
+          // 새로운 imageData 개체
+          // imageData의 개체 화소마다 RGBA 값의 네 가지 값을 가짐
+          var imgData = ctx.createImageData(10000, 10000);
+
           for (i = 0; i < string_lst.length; i++){
-            document.write(string_lst[i] + "<br>");
-        }
+            for (j = 0; j < imgData.data.length; i+=4){
+              // 0 : none
+              if (string_lst[i] == '0') {
+                imgData.data[i+0] = 0;
+                imgData.data[i+1] = 0;
+                imgData.data[i+2] = 0;
+                imgData.data[i+3] = 0;
+              }
+              // 1 : sense
+              else if (string_lst[i] == '1') {
+                imgData.data[i+0] = 255;
+                imgData.data[i+1] = 255;
+                imgData.data[i+2] = 0;
+                imgData.data[i+3] = 255;
+              }
+              // 2 : wall
+              else if (string_lst[i] == '2') {
+                imgData.data[i+0] = 255;
+                imgData.data[i+1] = 0;
+                imgData.data[i+2] = 0;
+                imgData.data[i+3] = 255;
+              }
+              // 3 : arrive
+              else if (string_lst[i] == '3') {
+                imgData.data[i+0] = 0;
+                imgData.data[i+1] = 0;
+                imgData.data[i+2] = 255;
+                imgData.data[i+3] = 255;
+              }
+              // 4 : empty
+              else if (string_lst[i] == '4') {
+                imgData.data[i+0] = 0;
+                imgData.data[i+1] = 0;
+                imgData.data[i+2] = 0;
+                imgData.data[i+3] = 0;
+              }
+              // 5 : center
+              else if (string_lst[i] == '5') {
+                imgData.data[i+0] = 0;
+                imgData.data[i+1] = 255;
+                imgData.data[i+2] = 0;
+                imgData.data[i+3] = 0;
+              }
+              // 6 : path
+              else if (string_lst[i] == '6') {
+                imgData.data[i+0] = 102;
+                imgData.data[i+1] = 0;
+                imgData.data[i+2] = 153;
+                imgData.data[i+3] = 255;
+              }
+              else {
+                document.write(string_lst[i] + "<br>");
+              }
+            }
+          }
+          ctx.putImageData(imgData, 0, 0);
         </script>
       </div>
     </div>

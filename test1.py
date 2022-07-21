@@ -1,41 +1,16 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-import sys
-import os
+import csv
 
-class MainWindow(QWidget):
+f = open("map.csv", "w")
 
-    def __init__(self):
-        super().__init__()
+StartEndRow = [1 for _ in range(40)]
+MiddleRow = [0 for _ in range(40)]
+MiddleRow[0] = 1
+MiddleRow[39] = 1
 
-        self.btn_start = QPushButton('start')
-        self.btn_start.clicked.connect(self.addText)
-        
-        self.btn_stop = QPushButton('stop')
-        self.btn_start.clicked.connect(self.stopText)
-        self.tb = QTextBrowser()        
+writer = csv.writer(f)
 
-        vbox = QVBoxLayout()
-        vbox.addWidget(self.btn_start)
-        vbox.addWidget(self.btn_stop)
-        vbox.addWidget(self.tb)
-
-        self.setLayout(vbox)
-        
-        self.setWindowTitle('test')
-        self.setGeometry(500, 500, 500, 600)
-        self.show()
-        
-    def addText(self) :
-        while (True) :
-            self.result = os.system("C:/opencv/development/face/dist/test.exe")
-            self.tb.append(self.result)
-            if self.btn_stop :
-                self.stopText()
-            
-    def stopText(self) :
-        self.tb.clear()
-
-app = QApplication(sys.argv)
-inst = MainWindow()
-app.exec_()
+writer.writerow(StartEndRow)
+for i in range(38) : 
+    writer.writerow(MiddleRow)
+writer.writerow(StartEndRow)
+f.close
