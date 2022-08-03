@@ -110,6 +110,7 @@ try :
             line = f.readlines()
             tmp_lst = [[] for i in range(1000)]
             item_lst = list(line) # 문자열 리스트에 저장
+            print(item_lst)
         
         return render_template('map.html', string_lst = item_lst)
 
