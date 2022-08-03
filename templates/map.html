@@ -29,7 +29,7 @@
 
     <div class="container-fluid">
       <div class="row">
-        <canvas id='myCanvas' width="2000" height="2000" style="border:1px solid #d3d3d3;"></canvas>
+        <canvas id='myCanvas' width="600" height="600" style="border:1px solid #d3d3d3;"></canvas>
         <script language = 'JavaScript'>
           var string_lst = {{string_lst|tojson}};
           var c = document.getElementByID("myCanvas");
@@ -37,7 +37,7 @@
           document.write(string_lst);
           // 새로운 imageData 개체
           // imageData의 개체 화소마다 RGBA 값의 네 가지 값을 가짐
-          var imgData = ctx.createImageData(1,1);
+          var imgData = ctx.createImageData(100,100);
 
           for (i = 0; i < string_lst.length; i++){
             for (j = 0; j < imgData.data.length; i+=4){
