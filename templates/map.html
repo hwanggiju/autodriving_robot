@@ -37,7 +37,7 @@
           document.write(string_lst);
           // 새로운 imageData 개체
           // imageData의 개체 화소마다 RGBA 값의 네 가지 값을 가짐
-          var imgData = ctx.createImageData(100,100);
+          var imgData = ctx.createImageData(1,1);
 
           for (i = 0; i < string_lst.length; i++){
             str = string_lst[i].split()
@@ -92,10 +92,18 @@
                   imgData.data[j+2] = 153;
                   imgData.data[j+3] = 255;
                 }
-                else {
-                  document.write(str[k]);
+                else if (str[k] == '\n'){
+                  imgData.data[j+0] = 0;
+                  imgData.data[j+1] = 0;
+                  imgData.data[j+2] = 0;
+                  imgData.data[j+3] = 0;
                 }
-                document.write("<br>");
+                else {
+                  imgData.data[j+0] = 0;
+                  imgData.data[j+1] = 0;
+                  imgData.data[j+2] = 0;
+                  imgData.data[j+3] = 0;
+                }
               }
             }
           }
