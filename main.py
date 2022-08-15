@@ -219,6 +219,7 @@ try :
             return render_template('index.html')
 
     if __name__ == '__main__':
+        # 웹 서버 실행
         app.run(host='0.0.0.0', threaded=True, debug=True)
         
 except KeyboardInterrupt :
