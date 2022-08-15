@@ -1,5 +1,5 @@
 var chart;
-// 데이터 요청
+// 데이터 응답
 function requestData() {
     $.ajax({
         // 웹페이지와 연결되는 url

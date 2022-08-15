@@ -17,30 +17,43 @@ from random import random
 import json
 import os
 
+'''
+
+BackEnd 
+python-Flask 활용
+
+'''
+
 try :
+    # 전역변수 선언
     global user, switch, name
-    user = 0    # 사용자 얼굴 인식 확인
-    switch = 1  # 카메라 동작 on/off 확인 1 : on, 0 : off
-    name = 'Unknown'    # 사용자 일치 확인
-    port = '/dev/ttyACM0'   # 아두이노 시리얼 통신 포트
-    brate = 115200          # 아두이노 시리얼 통신 brate
+    # 사용자 얼굴 인식 확인
+    user = 0
+    # 카메라 동작 on/off 확인 1 : on, 0 : off
+    switch = 1
+    # 사용자 이름 기본값
+    name = 'Unknown'
+    # 아두이노 시리얼 포트 넘버와 brate 설정 
+    port = '/dev/ttyACM0'
+    brate = 115200
 
-    # 이미지 학습 전처리
-    # C:/opencv/development/face/ - 윈도우 환경 테스트 작업 시 복붙 용
-    obama_image = face_recognition.load_image_file("image_dir/obama.jpg")
-    obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
+    # 이미지 파일 dlib 라이브러리를 활용한 이미지 학습
+    obama_image = face_recognition.load_image_file("image_dir/obama.jpg") # 이미지 로드
+    obama_face_encoding = face_recognition.face_encodings(obama_image)[0] # 이미지 인코딩 후 데이터 저장
 
-    biden_image = face_recognition.load_image_file("image_dir/biden.jpg")
-    biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
+    biden_image = face_recognition.load_image_file("image_dir/biden.jpg") # 이미지 로드
+    biden_face_encoding = face_recognition.face_encodings(biden_image)[0] # 이미지 인코딩 후 데이터 저장
 
-    giju_image = face_recognition.load_image_file("image_dir/giju_image.jpg")
-    giju_face_encoding = face_recognition.face_encodings(giju_image)[0]
+    giju_image = face_recognition.load_image_file("image_dir/giju_image.jpg") # 이미지 로드
+    giju_face_encoding = face_recognition.face_encodings(giju_image)[0] # 이미지 인코딩 후 데이터 저장
 
+    # 이미지 인코딩 데이터 리스트 저장
     known_face_encodings = [
         obama_face_encoding,
         biden_face_encoding,
         giju_face_encoding
     ]
+    # 인코딩 데이터 리스트와 매칭되는 고유값 리스트
     known_face_names = [
         "Barack Obama",
         "Joe Biden",
@@ -75,18 +88,22 @@ try :
         
     # 카메라 frame 읽어오고 웹에서 표현하는 형식으로 인코딩해주는 함수
     def gen_frame(cap):
-        global user
+        # 웹 브라우저에서 객체 인식하라는 버튼 입력을 받으면, 
+        # 객체 인식 함수를 실행하기 위한 신호를 알려주기 위한 변수
+        global user 
         while True:
-            success, frame = cap.read()
+            success, frame = cap.read() # 카메라 읽기
             if success:
-                if (user) :
+                # 스트리밍과 같이 동작하면, 스트리밍 속도 저하 문제
+                # 객체 인식이 필요한 상황에만 적용할 수 있도록 작업하였음.
+                if (user) : 
                     user = 0
-                    name = user_detect(frame)
+                    name = user_detect(frame) # 객체 인식 함수
                 try :
                     ret, jpeg = cv2.imencode('.jpg', cv2.flip(frame, 1)) # 프레임 -> 메모리 버퍼로 인코딩
                     frame = jpeg.tobytes()
-                    yield (b'--frame\r\n'
-                        b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n') # HTTP 응답으로 전송하는데 필요한 형식으로 전환
+                    # HTTP 응답으로 전송하는데 필요한 형식으로 전환
+                    yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n') 
                 except Exception as e:
                     pass
             else :
@@ -106,6 +123,8 @@ try :
     @app.route("/Map")
     def bridge_map():
         # 0 : no data, 1 : 라이다 센싱, 2 : 벽, 3 : 목적지, 4 : 빈공간, 5 : 현재 로봇 위치, 6 : 경로 
+        # csv 파일 읽어오고 데이터 처리하다가 다시 텍스트 파일로 읽어오는 코드로 바꿈
+        # 현한 : 비트맵 파일 형식 저장, 시도해보아야 함.
         with open("map.txt", mode = "rt", encoding = 'utf-8') as f :
             line = f.readlines()
             tmp_lst = [[] for i in range(1000)]
@@ -116,41 +135,38 @@ try :
     # 데이터 그래프 실시간으로 그려주는 동적 함수 - 자바 코드와 연동됨
     @app.route('/live-data')
     def live_data():
-        '''
-        port = '/dev/ttyACM0'
-        brate = 9600
+        # 아두이노 Serial 데이터 읽어오기 위한 설정값
         ser = serial.Serial(port, brate, timeout=None)
-        senser_data = ser.readline()
-        senser_data = float(data.decode()[:len(data)-3])
-        '''
-        ser = serial.Serial(port, brate, timeout=None)
+        # Serial 데이터 읽어오기
         SerialData = ser.readline()
         # [:len(SerialData)]
-        SerialData = SerialData.decode(errors='ignore')[:4] # 데이터 슬라이싱
-        SerialData = SerialData    # 
-        print(SerialData)
-
-        data = [time() * 1000,  random() * 100 ] # random() * 100 
+        SerialData = SerialData.decode(errors='ignore')[:4] # 읽어온 데이터 슬라이싱
+        # print(SerialData)
+        # 시간과 Serial 데이터 값 리스트 형식 저장
+        data = [time() * 1000,  SerialData] # random() * 100 
+        # 자바 함수의 입력으로 반환
         response = make_response(json.dumps(data))
         response.content_type = 'application/json'
         return response
-
+    
     # 카메라 실시간 스트리밍 화면 보여주는 함수
     @app.route('/stream')
     def stream():
         global cap
-        return Response(gen_frame(cap), mimetype='multipart/x-mixed-replace; boundary=frame')
+        return Response(gen_frame(cap), \
+                        mimetype='multipart/x-mixed-replace; boundary=frame')
 
-    # 기본 카메라 화면에서 버튼 입력으로 카메라 동작 ON/OFF 가능
-    # 사용자 인식 버튼 입력 시 사용자 얼굴 매칭
+    # 웹 브라우저 신호 입력으로 받아서 처리되는 부분
     @app.route('/requests', methods=['POST', 'GET'])
     def tasks() :
         global switch, name, cap
+        # POST 메서드를 사용하여 웹 브라우저의 신호를 받음
         if request.method == 'POST' :
+            # 객체 인식 버튼 입력 시
             if request.form.get('clicked') == 'User':
                 global user
                 user = 1
-                
+            # 스트리밍 ON/OFF 버튼 입력 시
             elif request.form.get('camera_stop') == 'Stop/Start':
                 if(switch==1):
                     switch = 0
@@ -158,10 +174,10 @@ try :
                 else :
                     cap = cv2.VideoCapture(0)
                     switch = 1
-                    
+        # GET 메서드를 사용할 가능성으로 작성만 해놓은 것.
+        # 실제로 사용되는 곳은 아직 없음.
         elif request.method == 'GET' :
             return render_template('main.html')
-        
         return render_template('main.html', value = name)
         
     # 모터 동작 명령 수행

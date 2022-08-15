@@ -27,7 +27,7 @@
         <p>Data Monitoring Chart</p>
       </div>
     </div>
-
+    <!-- 제어 명령 버튼 입력 -->>
     <div class="container-fluid">
       <div class="row">
         <form method = 'POST', action="{{url_for('gostop')}}">
@@ -40,23 +40,23 @@
           <input type="submit" value="Reset" name="R" /> &nbsp;&nbsp;
           <input type="submit" value="Pos"  name="P" /> &nbsp;&nbsp;
         </form>
+        <!-- 그래프 그리기 -->>
         <div class="container-fluid" id="data-container"></div>
       </div>
     </div>
     <hr>
-
       <footer>
         <p>&copy; 613-1 Lab</p>
       </footer>
-    </div> <!-- /container -->
-
+    </div>
+    <!-- 자바 코드와 연결 -->>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="http://code.highcharts.com/highcharts-more.js"></script>
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
 
     <script src="/static/js/highcharts.js"></script>
-
+    
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   </body>
 </html>
