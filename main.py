@@ -27,6 +27,10 @@ python-Flask 활용
 try :
     # 전역변수 선언
     global user, switch, name
+    
+    # 카메라 device 연결
+    cap = cv2.VideoCapture(0)
+    
     # 사용자 얼굴 인식 확인
     user = 0
     # 카메라 동작 on/off 확인 1 : on, 0 : off
@@ -61,9 +65,6 @@ try :
     ]
     # 어플리케이션 선언
     app = Flask(__name__, static_url_path='/static')
-
-    # 카메라 device 연결
-    cap = cv2.VideoCapture(0)
 
     # 사용자 얼굴 감지 구현 함수
     def user_detect(frame) : 
