@@ -1,22 +1,23 @@
-import sys
+import cv2
 
-def fib(n) :
-    if (n == 1 or n == 2) :
-        return 1
-    
-    else :
-        return (fib(n-1) + fib(n-2)) 
-    
-def fibonacci(n) :
-    dp = [0] * (n+1) 
-    dp[1] = 1
-    dp[2] = 1
-    cnt = 0
-    for i in range(3, n + 1) :
-        cnt += 1
-        dp[i] = dp[i-1] + dp[i-2]
-    return cnt
+cap = cv2.VideoCapture(0)
 
-n = int(sys.stdin.readline())
+if cap.isOpened():
+    print("camera is Opened")
+    delay = int(1000 / cap.get(cv2.CAP_PROP_FPS)) 
+    while True:
+        ret, img = cap.read()
+        if ret:
+            img = cv2.flip(img, 1)
+            cv2.imshow('Camera', img)
+            if cv2.waitKey(delay) & 0xFF == 27:
+                print('exit')
+                break
+        else:
+            print(ret, img)
+            break
+else:
+    print('Camera not opened')
 
-print(fib(n), fibonacci(n))
+cap.release()
+cv2.destroyAllWindows()

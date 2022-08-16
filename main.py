@@ -144,7 +144,7 @@ try :
         SerialData = SerialData.decode(errors='ignore')[:4] # 읽어온 데이터 슬라이싱
         # print(SerialData)
         # 시간과 Serial 데이터 값 리스트 형식 저장
-        data = [time() * 1000,  SerialData] # random() * 100 
+        data = [time() * 1000,  random() * 100 ] # random() * 100 
         # 자바 함수의 입력으로 반환
         response = make_response(json.dumps(data))
         response.content_type = 'application/json'
