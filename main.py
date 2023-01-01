@@ -66,7 +66,7 @@ try :
     # 카메라 device 연결
     cap = cv2.VideoCapture(0)
 
-    # 사용자 얼굴 감지 구현 함수
+    # 객체 감지 구현 함수
     def user_detect(frame) : 
         global name
         rgb_frame = frame[:, :, ::-1]
@@ -74,7 +74,7 @@ try :
         face_locations = face_recognition.face_locations(rgb_frame) # 찾은 얼굴 값
         
         face_encodings = face_recognition.face_encodings(rgb_frame, face_locations) # 얼굴 인코딩
-        
+    
         for face_encoding in face_encodings:
         
             matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
@@ -84,7 +84,6 @@ try :
             if matches[best_match_index]:
                 name = known_face_names[best_match_index]
                 return name
-            
         return name
         
     # 카메라 frame 읽어오고 웹에서 표현하는 형식으로 인코딩해주는 함수
